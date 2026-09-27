@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Willian Souza — Tatuador em Cotia | Tatuagem autoral</title>
+  <meta name="description" content="Tatuagem autoral em Cotia/SP. Arte exclusiva, desenhada do zero pra você, com higiene de verdade e atendimento próximo. Fale no WhatsApp.">
+  <meta name="theme-color" content="#131518">
+  <meta property="og:title" content="Willian Souza — Tatuador em Cotia">
+  <meta property="og:description" content="Tatuagens autorais em Cotia/SP. Sua história, gravada na pele.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Willian Souza">
+  <!-- TODO (antes de publicar): troque "SEU-DOMINIO.com.br" pelo dominio real em TODOS os metadados abaixo e no JSON-LD -->
+  <meta property="og:url" content="https://SEU-DOMINIO.com.br/">
+  <meta property="og:image" content="https://SEU-DOMINIO.com.br/assets/Portfolio/1.jpg">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="1440">
+  <meta property="og:image:alt" content="Tatuagem autoral feita por Willian Souza">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Willian Souza — Tatuador em Cotia">
+  <meta name="twitter:description" content="Tatuagens autorais em Cotia/SP. Sua história, gravada na pele.">
+  <meta name="twitter:image" content="https://SEU-DOMINIO.com.br/assets/Portfolio/1.jpg">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23212529'/%3E%3Ctext x='50' y='68' font-size='54' text-anchor='middle' fill='%23adb5bd' font-family='Georgia'%3EW%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind = {
+      config: {
+        theme: {
+          extend: {
+            colors: {
+              paper: '#f8f9fa',
+              silver: '#adb5bd',
+              steel: '#6c757d',
+              coal: '#343a40',
+              ink: '#212529',
+              abyss: '#131518'
+            },
+            fontFamily: {
+              head: ['"Barlow Condensed"', 'sans-serif']
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Dados estruturados (SEO local: tatuador em Cotia/SP). Somente fatos verificados: sem endereco exato, horarios ou avaliacoes inventadas. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TattooParlor",
+    "@id": "https://SEU-DOMINIO.com.br/#organizacao",
+    "name": "Willian Souza",
+    "alternateName": "Willian Souza Tatuador",
+    "description": "Tatuagem autoral em Cotia/SP: arte exclusiva desenhada do zero, higiene de verdade e atendimento próximo do orçamento à cicatrização.",
+    "url": "https://SEU-DOMINIO.com.br/",
+    "image": "https://SEU-DOMINIO.com.br/assets/Portfolio/1.jpg",
+    "telephone": "+5511950869752",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Cotia",
+      "addressRegion": "SP",
+      "addressCountry": "BR"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Cotia" },
+      { "@type": "AdministrativeArea", "name": "Grande São Paulo" }
+    ],
+    "knowsAbout": ["Blackwork", "Traço fino", "Tatuagem autoral", "Design exclusivo"],
+    "founder": {
+      "@type": "Person",
+      "name": "Willian Souza",
+      "jobTitle": "Artista e Tatuador",
+      "sameAs": "https://www.instagram.com/w_stattoo/"
+    },
+    "sameAs": [
+      "https://www.instagram.com/w_stattoo/",
+      "https://vm.tiktok.com/ZM83u2cKK/"
+    ]
+  }
+  </script>
+</head>
+
+<body class="bg-abyss text-paper font-[Inter] antialiased overflow-x-hidden">
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__content">
+      <img class="preloader-logo" src="assets/Logo/LOGO.png" alt="">
+      <p class="preloader-name">Willian Souza <span>|</span> Tatuador</p>
+    </div>
+  </div>
+
+  <div class="progress" id="progressBar" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar" id="navbar">
+    <div class="container mx-auto flex items-center justify-between py-2.5">
+      <a href="#inicio" class="nav-brand">
+        <img class="nav-logo" src="assets/Logo/LOGO.png" alt="Willian Souza logo">
+        <span class="nav-title">Willian Souza</span>
+      </a>
+
+      <nav class="nav-links hidden items-center gap-10 md:flex" id="navLinks" aria-label="Navegação principal">
+        <a href="#galeria">Galeria</a>
+        <a href="#artista">Artista</a>
+        <a href="#processo">Processo</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="hidden md:block">
+        <a href="https://wa.me/5511950869752" target="_blank" rel="noopener" class="btn btn-primary !py-2.5 !px-5 !text-sm">Orçamento</a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="inicio">
+      <div class="hero-bg" aria-hidden="true"></div>
+
+      <div class="container relative z-10 flex items-center justify-center">
+        <div class="hero-brand rise rise-1">
+          <img class="hero-logo" src="assets/Logo/LOGO.png" alt="Willian Souza">
+          <p class="hero-name">Willian Souza <span>|</span> Tatuador</p>
+          <a class="hero-sub-cta rise rise-2" href="https://wa.me/5511950869752" target="_blank" rel="noopener" aria-label="Tatuagens feitas com alma — pedir orçamento no WhatsApp">
+            Tatuagens feitas com alma <span class="hero-sub-cta__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MARQUEE / PROVA ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">Blackwork <span>•</span></span>
+        <span class="marquee-item">Traço fino <span>•</span></span>
+        <span class="marquee-item">Arte autoral <span>•</span></span>
+        <span class="marquee-item">Design exclusivo <span>•</span></span>
+        <span class="marquee-item">Cotia · SP <span>•</span></span>
+        <span class="marquee-item">Blackwork <span>•</span></span>
+        <span class="marquee-item">Traço fino <span>•</span></span>
+        <span class="marquee-item">Arte autoral <span>•</span></span>
+        <span class="marquee-item">Design exclusivo <span>•</span></span>
+        <span class="marquee-item">Cotia · SP <span>•</span></span>
+      </div>
+    </div>
+
+    <!-- ===== GALERIA ===== -->
+    <section class="galeria-section py-16 lg:py-20" id="galeria">
+      <div class="container">
+        <div class="reveal mb-10 text-center md:mb-12">
+          <h2 class="text-4xl md:text-6xl">Artes <span class="text-silver">@w_stattoo</span></h2>
+        </div>
+      </div>
+
+      <div class="galeria-stage reveal">
+        <div class="drift-wrap">
+          <div class="drift-wall" id="driftWall" role="img" aria-label="Galeria de tatuagens autorais de Willian Souza">
+            <div class="drift-wall__plane" id="driftPlane" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container reveal galeria-cta">
+        <a href="https://www.instagram.com/w_stattoo/" target="_blank" rel="noopener">Ver todas no Instagram <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <!-- ===== ARTISTA ===== -->
+    <section class="container py-16 lg:py-20" id="artista">
+      <div class="reveal-group grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+        <div class="reveal">
+          <span class="eyebrow">O artista</span>
+          <h2 class="max-w-xl">
+            QUEM DESENHA É QUEM <span class="text-silver">TATUA</span>
+          </h2>
+          <div class="mt-7 space-y-5 text-silver font-light">
+            <p>
+              Willian Souza é artista e tatuador em Cotia, no coração de São Paulo. Ele não
+              "aplica desenhos" — ele constrói peças. Primeiro escuta, depois desenha,
+              e só então trabalha na sua pele.
+            </p>
+            <p>
+              O resultado é uma tatuagem que ninguém mais tem: desenhada pra você,
+              respeitando a anatomia do seu corpo e o estilo da sua história.
+              Da primeira mensagem até a cicatrização, você é acompanhado de perto.
+            </p>
+          </div>
+          <a href="#galeria" class="btn btn-ghost mt-8 !border-silver/40">Conhecer o trabalho</a>
+        </div>
+
+        <div class="reveal flex items-center justify-center">
+          <figure class="artist-frame">
+            <img class="artist-photo" src="assets/Artista/SaveClip.App_589164497_18542110912026416_5207490521414100792_n.jpg" alt="Willian Souza, artista e tatuador" loading="lazy">
+            <figcaption class="artist-caption">
+              <span>Willian Souza</span>
+              <small>Artista e tatuador</small>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROCESSO ===== -->
+    <section class="border-y border-silver/10 bg-ink/40 py-16 lg:py-20" id="processo">
+      <div class="container">
+        <div class="reveal mb-14 max-w-2xl">
+          <span class="eyebrow">Como funciona</span>
+          <h2 class="text-4xl md:text-6xl">Da ideia à pele, <span class="text-silver">sem enrolação</span></h2>
+        </div>
+
+        <div class="reveal-group grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="reveal step">
+            <span class="step-num">01</span>
+            <h3 class="text-xl">Contato</h3>
+            <p class="mt-2 text-sm font-light text-silver">Chama no WhatsApp com a ideia e o local do corpo.</p>
+          </article>
+          <article class="reveal step">
+            <span class="step-num">02</span>
+            <h3 class="text-xl">Arte</h3>
+            <p class="mt-2 text-sm font-light text-silver">Uma peça exclusiva desenhada pra você, sem pressa.</p>
+          </article>
+          <article class="reveal step">
+            <span class="step-num">03</span>
+            <h3 class="text-xl">Agenda</h3>
+            <p class="mt-2 text-sm font-light text-silver">Data, horário e valor combinados de forma transparente.</p>
+          </article>
+          <article class="reveal step">
+            <span class="step-num">04</span>
+            <h3 class="text-xl">Tatuagem</h3>
+            <p class="mt-2 text-sm font-light text-silver">Sessão segura, atenta e com acompanhamento pós.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DEPOIMENTOS ===== -->
+    <section class="py-16 lg:py-20" id="depoimentos">
+      <div class="container">
+        <div class="reveal mb-14 max-w-2xl">
+          <span class="eyebrow">Na voz de quem tatuou</span>
+          <h2 class="text-4xl md:text-6xl">Quem entra, <span class="text-silver">recomenda</span></h2>
+        </div>
+
+        <div class="reveal-group grid gap-5 md:grid-cols-3">
+          <figure class="reveal quote-card">
+            <img class="quote-bg" src="assets/Prova%20Social/P1.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <p class="text-6xl leading-none text-silver/40 font-head" aria-hidden="true">"</p>
+            <blockquote class="mt-2 font-light text-silver">
+              A arte veio muito melhor que a referência que eu levei. Foi a primeira vez que saí de um estúdio totalmente realizada.
+            </blockquote>
+            <img class="quote-print" src="assets/Prova%20Social/PS1.png" alt="Print do comentário original do cliente" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="reveal quote-card">
+            <img class="quote-bg" src="assets/Prova%20Social/P2.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <p class="text-6xl leading-none text-silver/40 font-head" aria-hidden="true">"</p>
+            <blockquote class="mt-2 font-light text-silver">
+              Explicou tudo direitinho, desde o traço até o cuidado depois. Profissional do começo ao fim.
+            </blockquote>
+            <img class="quote-print" src="assets/Prova%20Social/PS2.png" alt="Print do comentário original do cliente" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="reveal quote-card">
+            <img class="quote-bg" src="assets/Prova%20Social/P3.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <p class="text-6xl leading-none text-silver/40 font-head" aria-hidden="true">"</p>
+            <blockquote class="mt-2 font-light text-silver">
+              Desenhou do zero uma peça sobre minha avó. Quando vi o resultado, chorei antes de sentar na cadeira.
+            </blockquote>
+            <img class="quote-print" src="assets/Prova%20Social/PS3.png" alt="Print do comentário original do cliente" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="border-y border-silver/10 bg-ink/40 py-16 lg:py-20" id="faq">
+      <div class="container max-w-3xl">
+        <div class="reveal mb-12 text-center">
+          <span class="eyebrow !justify-center">Perguntas frequentes</span>
+          <h2 class="text-4xl md:text-5xl">Tudo que você quer <span class="text-silver">saber antes</span></h2>
+        </div>
+
+        <div class="reveal space-y-4">
+          <div class="acc-item reveal">
+            <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-1">
+              Como faço o orçamento?
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="acc-panel" id="faq-panel-1"><p>Chame no WhatsApp com uma foto da referência, a região do corpo e o tamanho aproximado. Você recebe retorno com prazo e valor.</p></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-2">
+              Quanto custa uma tatuagem?
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="acc-panel" id="faq-panel-2"><p>Depende do tamanho, do detalhamento e da área do corpo. O valor é fechado com você antes de qualquer agendamento — sem surpresa.</p></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-3">
+              Posso levar uma arte pronta?
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="acc-panel" id="faq-panel-3"><p>Pode levar referências. Mas a tatuagem final é sempre desenhada do zero, na medida certa pro seu corpo — este é o nosso selo.</p></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-4">
+              Dói muito?
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="acc-panel" id="faq-panel-4"><p>Cada região tem uma sensibilidade diferente. A gente conversa sobre isso antes e você vai preparado — a maioria descreve como um arranhão forte.</p></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-5">
+              Como é o cuidado depois?
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="acc-panel" id="faq-panel-5"><p>Você sai com orientação completa de cicatrização e meu canal aberto pra qualquer dúvida durante as semanas seguintes.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA FINAL ===== -->
+    <section class="relative overflow-hidden py-20 lg:py-28" id="cta">
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true" style="background: radial-gradient(70% 80% at 50% 110%, rgba(173,181,189,0.14), transparent 60%), linear-gradient(180deg, transparent, rgba(33,37,41,0.6));"></div>
+
+      <div class="container relative z-10 max-w-3xl text-center">
+        <span class="hero-pill rise rise-1 mb-8">Agenda aberta para orçamento</span>
+        <h2 class="rise rise-2 text-5xl md:text-7xl leading-[0.95]">
+          A pele guarda o que<br>a memória <span class="text-silver">não deixa apagar.</span>
+        </h2>
+        <p class="rise rise-3 mx-auto mt-6 max-w-xl font-light text-silver">
+          Vem conversar sobre a sua. Mandou a ideia, eu devolvo um desenho que é só seu.
+        </p>
+        <div class="rise rise-4 mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a href="https://wa.me/5511950869752" target="_blank" rel="noopener" class="btn btn-primary !py-4 !px-9 !text-lg">Começar pelo WhatsApp</a>
+          <a href="https://www.instagram.com/w_stattoo/" target="_blank" rel="noopener" class="btn btn-ghost">@w_stattoo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="#inicio" class="footer-logo">
+        <img class="footer-logo-img" src="assets/Logo/LOGO.png" alt="Willian Souza">
+      </a>
+
+      <div class="footer-social">
+        <a href="https://www.instagram.com/w_stattoo/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://vm.tiktok.com/ZM83u2cKK/" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.84a8.16 8.16 0 0 0 4.76 1.52V6.91a4.84 4.84 0 0 1-1-.22z"/></svg>
+        </a>
+        <a href="https://wa.me/5511950869752" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </a>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <p class="footer-copy">© <span id="ano"></span> Willian Souza · Artista e Tatuador em Cotia/SP</p>
+    </div>
+  </footer>
+
+  <!-- ===== FABs ===== -->
+  <button class="back-top" id="backTop" aria-label="Voltar ao topo">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
