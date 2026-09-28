@@ -24,7 +24,7 @@
       "  touch-action: pan-y !important;",
       "}",
       /* Overlay mais transparente = imagens mais visíveis */
-      ".drift-wall__overlay { opacity: 0.35 !important; }",
+      ".drift-wall__overlay { opacity: 0.15 !important; }",
       /* Galeria: cursor + zoom no clique */
       ".drift-wall__tile { cursor: zoom-in; overflow: visible !important; }",
       ".drift-wall__inner {",
@@ -33,10 +33,16 @@
       "}",
       ".drift-wall__tile.is-zoomed { z-index: 20; cursor: zoom-out; }",
       ".drift-wall__tile.is-zoomed .drift-wall__inner {",
-      "  transform: scale(1.35);",
+      "  transform: scale(1.2);",
       "  box-shadow: 0 24px 60px rgba(0,0,0,0.55);",
       "}",
-      /* Aceleração de GPU pra suavizar */
+      /* Mobile: 3 colunas que cabem exatamente na tela */
+      "@media (max-width: 640px) {",
+      "  .drift-wall {",
+      "    --dw-tile-w: calc((100vw - 2 * var(--dw-gap)) / 3) !important;",
+      "  }",
+      "}",
+      /* Aceleração de GPU */
       ".drift-wall__plane, .drift-wall__track, .drift-wall__inner {",
       "  will-change: transform;",
       "}"
@@ -263,7 +269,6 @@
     var raf = null;
     var resizeTimer = null;
     var builtCols = VIEW.cols;
-    /* Flag: a galeria está visível na viewport? Se não, pausa o RAF. */
     var wallVisible = true;
 
     function isReduced() {
@@ -428,8 +433,6 @@
         tracks[c].style.transform = "translate3d(0," + -next + "px,0)";
       }
 
-      /* Só agenda o próximo frame se a galeria ainda estiver visível.
-         Fora da viewport, paramos o RAF pra não competir com o scroll. */
       if (wallVisible && !isReduced()) {
         raf = requestAnimationFrame(animate);
       } else {
@@ -437,8 +440,8 @@
       }
     }
 
-    /* Pausa a animação quando a galeria sai da viewport.
-       rootMargin positivo faz ativar um pouco antes de entrar em vista. */
+    /* Pausa a animação quando a galeria sai da viewport. rootMargin maior para
+       pausar mais cedo e não competir com o scroll. */
     if ("IntersectionObserver" in window) {
       var wallObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -449,7 +452,7 @@
             stopRaf();
           }
         });
-      }, { rootMargin: "150px 0px 150px 0px", threshold: 0 });
+      }, { rootMargin: "300px 0px 300px 0px", threshold: 0 });
       wallObserver.observe(wall);
     }
 
@@ -479,7 +482,6 @@
     wall.addEventListener("click", function (e) {
       var tile = e.target.closest ? e.target.closest("[data-tile-id]") : null;
 
-      /* Clique fora de qualquer tile → remove zoom */
       if (!tile || !wall.contains(tile)) {
         if (zoomedTile) {
           zoomedTile.classList.remove("is-zoomed");
@@ -488,14 +490,12 @@
         return;
       }
 
-      /* Clique na mesma tile já ampliada → desfaz */
       if (tile === zoomedTile) {
         tile.classList.remove("is-zoomed");
         zoomedTile = null;
         return;
       }
 
-      /* Nova tile → aplica zoom nela e remove da anterior */
       if (zoomedTile) zoomedTile.classList.remove("is-zoomed");
       tile.classList.add("is-zoomed");
       zoomedTile = tile;
