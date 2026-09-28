@@ -5,6 +5,12 @@
     ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
     : false;
 
+  /* Detecta dispositivo touch (celular/tablet). Nesses aparelhos, interações
+     de hover/parallax não fazem sentido e causam travamento ao rolar a página. */
+  var isTouch = window.matchMedia
+    ? window.matchMedia("(hover: none) and (pointer: coarse)").matches
+    : false;
+
   /* ---------- Preloader (1.5s mínimo) ---------- */
   (function () {
     var preloader = document.getElementById("preloader");
@@ -25,12 +31,8 @@
       var heroLogo = document.querySelector(".hero-logo");
       var heroName = document.querySelector(".hero-name");
 
-      /* Congela o pulso do logo do preloader: a caixa precisa ser a definitiva
-         (sem escala de animação) para o destino bater pixel a pixel. */
       if (pLogo) pLogo.style.animation = "none";
 
-      /* Devolve o transform que aterrissa "from" exatamente sobre "target":
-         mesma posicao (translate do centro) e mesmo tamanho (scale da largura). */
       function landOn(target, from) {
         if (!target || !from) return "";
         var t = target.getBoundingClientRect();
@@ -56,8 +58,6 @@
       void preloader.offsetWidth;
       preloader.classList.add("grow");
 
-      /* "loading" so sai no ultimo instante: assim o pulso do logo do hero
-         comeca exatamente quando o preloader desaparece (sem pulo de escala). */
       setTimeout(function () {
         document.body.classList.remove("loading");
         if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
@@ -223,7 +223,9 @@
       "assets/Portfolio/9.jpg"
     ];
 
-    var COLS = 5;
+    /* Menos colunas no celular = tiles maiores + menos caos visual.
+       5 colunas no desktop, 3 no celular. */
+    var COLS = isTouch ? 3 : 5;
     var SPEED = 42;
     var VARIANCE = 0.45;
     var DIR_UP = true;
@@ -231,7 +233,8 @@
     var TURN = -14;
     var ROLL = 0;
     var DEPTH = 120;
-    var PARALLAX = 0.6;
+    /* Sem parallax no touch: o tilt automático travava a rolagem da página. */
+    var PARALLAX = isTouch ? 0 : 0.6;
 
     var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
 
@@ -399,24 +402,29 @@
       raf = requestAnimationFrame(animate);
     }
 
-    wall.addEventListener("pointermove", function (e) {
-      var rect = wall.getBoundingClientRect();
-      if (PARALLAX > 0 && !isReduced()) {
-        pointer.x = (e.clientX - rect.left) / rect.width - 0.5;
-        pointer.y = (e.clientY - rect.top) / rect.height - 0.5;
-      }
-      var hit = document.elementFromPoint(e.clientX, e.clientY);
-      var tile = hit && hit.closest ? hit.closest("[data-tile-id]") : null;
-      if (!tile || !wall.contains(tile)) return;
-      if (tile === activeTile) return;
-      activate(tile);
-    });
+    /* Interações de hover só fazem sentido em desktop (mouse).
+       Em touch, ignoramos para evitar que a galeria trave ao rolar a página. */
+    if (!isTouch) {
+      wall.addEventListener("pointermove", function (e) {
+        if (e.pointerType && e.pointerType !== "mouse") return;
+        var rect = wall.getBoundingClientRect();
+        if (PARALLAX > 0 && !isReduced()) {
+          pointer.x = (e.clientX - rect.left) / rect.width - 0.5;
+          pointer.y = (e.clientY - rect.top) / rect.height - 0.5;
+        }
+        var hit = document.elementFromPoint(e.clientX, e.clientY);
+        var tile = hit && hit.closest ? hit.closest("[data-tile-id]") : null;
+        if (!tile || !wall.contains(tile)) return;
+        if (tile === activeTile) return;
+        activate(tile);
+      });
 
-    wall.addEventListener("pointerleave", function () {
-      pointer.x = 0;
-      pointer.y = 0;
-      clearActive();
-    });
+      wall.addEventListener("pointerleave", function () {
+        pointer.x = 0;
+        pointer.y = 0;
+        clearActive();
+      });
+    }
 
     window.addEventListener(
       "resize",
