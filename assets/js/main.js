@@ -5,7 +5,7 @@
     ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
     : false;
 
-  /* Detecção robusta de touch (iOS Safari, Android, etc.) */
+  /* Detecção robusta de touch */
   var isTouch = false;
   if (window.matchMedia) {
     isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
@@ -14,52 +14,37 @@
     isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
   }
 
-  /* ---------- CSS injetado: fixes de mobile + lightbox ---------- */
+  /* ---------- CSS injetado ---------- */
   (function injectStyles() {
     var style = document.createElement("style");
     style.setAttribute("data-injected", "main-js");
     style.textContent = [
-      /* Mobile: libera rolagem vertical por cima da galeria */
+      /* Libera rolagem vertical por cima da galeria */
       ".galeria-stage, .drift-wrap, .drift-wall, .drift-wall__plane, .drift-wall__col, .drift-wall__track {",
       "  touch-action: pan-y !important;",
       "}",
-      /* Imagens menos apagadas */
-      ".drift-wall__overlay {",
-      "  opacity: 0.35 !important;",
+      /* Overlay mais transparente = imagens mais visíveis */
+      ".drift-wall__overlay { opacity: 0.35 !important; }",
+      /* Galeria: cursor + zoom no clique */
+      ".drift-wall__tile { cursor: zoom-in; overflow: visible !important; }",
+      ".drift-wall__inner {",
+      "  transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1),",
+      "              box-shadow 0.4s cubic-bezier(0.22,0.61,0.36,1) !important;",
       "}",
-      ".drift-wall__tile { cursor: zoom-in; }",
-      /* Lightbox */
-      ".tattoo-lightbox {",
-      "  position: fixed; inset: 0; z-index: 9999;",
-      "  display: none; align-items: center; justify-content: center;",
-      "  padding: 20px; background: rgba(0,0,0,0.93);",
-      "  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);",
-      "  opacity: 0; transition: opacity 0.3s ease;",
+      ".drift-wall__tile.is-zoomed { z-index: 20; cursor: zoom-out; }",
+      ".drift-wall__tile.is-zoomed .drift-wall__inner {",
+      "  transform: scale(1.35);",
+      "  box-shadow: 0 24px 60px rgba(0,0,0,0.55);",
       "}",
-      ".tattoo-lightbox.is-open { display: flex; opacity: 1; }",
-      ".tattoo-lightbox img {",
-      "  max-width: 95vw; max-height: 88vh; width: auto; height: auto;",
-      "  object-fit: contain; border-radius: 4px;",
-      "  box-shadow: 0 24px 80px rgba(0,0,0,0.7);",
-      "  transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);",
-      "}",
-      ".tattoo-lightbox.is-open img { transform: scale(1); }",
-      ".tattoo-lightbox__close {",
-      "  position: absolute; top: 18px; right: 18px;",
-      "  width: 46px; height: 46px; border-radius: 50%;",
-      "  background: rgba(255,255,255,0.1);",
-      "  border: 1px solid rgba(255,255,255,0.25);",
-      "  color: #fff; font-size: 22px; line-height: 1;",
-      "  display: grid; place-items: center; cursor: pointer;",
-      "  transition: background 0.2s ease;",
-      "}",
-      ".tattoo-lightbox__close:hover { background: rgba(255,255,255,0.22); }",
-      "body.lightbox-open { overflow: hidden; }"
+      /* Aceleração de GPU pra suavizar */
+      ".drift-wall__plane, .drift-wall__track, .drift-wall__inner {",
+      "  will-change: transform;",
+      "}"
     ].join("\n");
     document.head.appendChild(style);
   })();
 
-  /* ---------- Preloader (1.5s mínimo) ---------- */
+  /* ---------- Preloader ---------- */
   (function () {
     var preloader = document.getElementById("preloader");
     if (!preloader) return;
@@ -235,40 +220,6 @@
   var ano = document.getElementById("ano");
   if (ano) ano.textContent = new Date().getFullYear();
 
-  /* ---------- Lightbox (zoom na tatuagem) ---------- */
-  var lightbox = document.createElement("div");
-  lightbox.className = "tattoo-lightbox";
-  lightbox.setAttribute("aria-hidden", "true");
-  lightbox.innerHTML =
-    '<button class="tattoo-lightbox__close" aria-label="Fechar">×</button>' +
-    '<img alt="Tatuagem ampliada">';
-  document.body.appendChild(lightbox);
-
-  var lbImg = lightbox.querySelector("img");
-  var lbClose = lightbox.querySelector(".tattoo-lightbox__close");
-
-  function openLightbox(src, alt) {
-    lbImg.src = src;
-    lbImg.alt = alt || "";
-    lightbox.classList.add("is-open");
-    lightbox.setAttribute("aria-hidden", "false");
-    document.body.classList.add("lightbox-open");
-  }
-  function closeLightbox() {
-    lightbox.classList.remove("is-open");
-    lightbox.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("lightbox-open");
-    setTimeout(function () { lbImg.src = ""; }, 300);
-  }
-
-  lbClose.addEventListener("click", closeLightbox);
-  lightbox.addEventListener("click", function (e) {
-    if (e.target === lightbox) closeLightbox();
-  });
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && lightbox.classList.contains("is-open")) closeLightbox();
-  });
-
   /* ---------- Galeria: Drift Wall ---------- */
   (function initDriftWall() {
     var wall = document.getElementById("driftWall");
@@ -287,7 +238,6 @@
       "assets/Portfolio/9.jpg"
     ];
 
-    /* --- View: diferente pra desktop vs mobile --- */
     var VIEW = isTouch
       ? { cols: 3, scale: 1.0, tilt: 8, turn: 0, depth: 0, parallax: 0 }
       : { cols: 5, scale: 1.18, tilt: 16, turn: -14, depth: 120, parallax: 0.6 };
@@ -306,12 +256,15 @@
     var baseVel = [];
     var hoveredCol = -1;
     var activeTile = null;
+    var zoomedTile = null;
     var pointer = { x: 0, y: 0 };
     var damped = { x: 0, y: 0 };
     var lastTs = null;
     var raf = null;
     var resizeTimer = null;
     var builtCols = VIEW.cols;
+    /* Flag: a galeria está visível na viewport? Se não, pausa o RAF. */
+    var wallVisible = true;
 
     function isReduced() {
       return prefersReduced || (mq && mq.matches);
@@ -351,8 +304,22 @@
       hoveredCol = -1;
     }
 
+    function startRaf() {
+      if (raf === null && !isReduced() && wallVisible) {
+        lastTs = null;
+        raf = requestAnimationFrame(animate);
+      }
+    }
+
+    function stopRaf() {
+      if (raf !== null) {
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+    }
+
     function build() {
-      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      stopRaf();
       lastTs = null;
       plane.innerHTML = "";
       tracks = [];
@@ -433,7 +400,7 @@
           t.style.transform = "translate3d(0," + -offsets[i] + "px,0)";
         });
       } else {
-        raf = requestAnimationFrame(animate);
+        startRaf();
       }
     }
 
@@ -461,7 +428,29 @@
         tracks[c].style.transform = "translate3d(0," + -next + "px,0)";
       }
 
-      raf = requestAnimationFrame(animate);
+      /* Só agenda o próximo frame se a galeria ainda estiver visível.
+         Fora da viewport, paramos o RAF pra não competir com o scroll. */
+      if (wallVisible && !isReduced()) {
+        raf = requestAnimationFrame(animate);
+      } else {
+        raf = null;
+      }
+    }
+
+    /* Pausa a animação quando a galeria sai da viewport.
+       rootMargin positivo faz ativar um pouco antes de entrar em vista. */
+    if ("IntersectionObserver" in window) {
+      var wallObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          wallVisible = entry.isIntersecting;
+          if (wallVisible) {
+            startRaf();
+          } else {
+            stopRaf();
+          }
+        });
+      }, { rootMargin: "150px 0px 150px 0px", threshold: 0 });
+      wallObserver.observe(wall);
     }
 
     /* Hover de coluna só em desktop */
@@ -486,18 +475,35 @@
       });
     }
 
-    /* Click na tile → abre lightbox (desktop e mobile) */
+    /* Clique = zoom sutil. Clique fora ou no mesmo = volta ao normal. */
     wall.addEventListener("click", function (e) {
       var tile = e.target.closest ? e.target.closest("[data-tile-id]") : null;
-      if (!tile || !wall.contains(tile)) return;
-      var src = tile.getAttribute("data-src");
-      if (src) openLightbox(src, "Tatuagem de Willian Souza");
+
+      /* Clique fora de qualquer tile → remove zoom */
+      if (!tile || !wall.contains(tile)) {
+        if (zoomedTile) {
+          zoomedTile.classList.remove("is-zoomed");
+          zoomedTile = null;
+        }
+        return;
+      }
+
+      /* Clique na mesma tile já ampliada → desfaz */
+      if (tile === zoomedTile) {
+        tile.classList.remove("is-zoomed");
+        zoomedTile = null;
+        return;
+      }
+
+      /* Nova tile → aplica zoom nela e remove da anterior */
+      if (zoomedTile) zoomedTile.classList.remove("is-zoomed");
+      tile.classList.add("is-zoomed");
+      zoomedTile = tile;
     });
 
     window.addEventListener("resize", function () {
       if (resizeTimer) clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function () {
-        /* Se mudou o breakpoint (mobile <-> desktop), refaz o build */
         var nextCols = isTouch ? 3 : 5;
         if (nextCols !== builtCols) {
           VIEW = isTouch
