@@ -5,11 +5,59 @@
     ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
     : false;
 
-  /* Detecta dispositivo touch (celular/tablet). Nesses aparelhos, interações
-     de hover/parallax não fazem sentido e causam travamento ao rolar a página. */
-  var isTouch = window.matchMedia
-    ? window.matchMedia("(hover: none) and (pointer: coarse)").matches
-    : false;
+  /* Detecção robusta de touch (iOS Safari, Android, etc.) */
+  var isTouch = false;
+  if (window.matchMedia) {
+    isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  }
+  if (!isTouch && typeof navigator !== "undefined") {
+    isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+  }
+
+  /* ---------- CSS injetado: fixes de mobile + lightbox ---------- */
+  (function injectStyles() {
+    var style = document.createElement("style");
+    style.setAttribute("data-injected", "main-js");
+    style.textContent = [
+      /* Mobile: libera rolagem vertical por cima da galeria */
+      ".galeria-stage, .drift-wrap, .drift-wall, .drift-wall__plane, .drift-wall__col, .drift-wall__track {",
+      "  touch-action: pan-y !important;",
+      "}",
+      /* Imagens menos apagadas */
+      ".drift-wall__overlay {",
+      "  opacity: 0.35 !important;",
+      "}",
+      ".drift-wall__tile { cursor: zoom-in; }",
+      /* Lightbox */
+      ".tattoo-lightbox {",
+      "  position: fixed; inset: 0; z-index: 9999;",
+      "  display: none; align-items: center; justify-content: center;",
+      "  padding: 20px; background: rgba(0,0,0,0.93);",
+      "  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);",
+      "  opacity: 0; transition: opacity 0.3s ease;",
+      "}",
+      ".tattoo-lightbox.is-open { display: flex; opacity: 1; }",
+      ".tattoo-lightbox img {",
+      "  max-width: 95vw; max-height: 88vh; width: auto; height: auto;",
+      "  object-fit: contain; border-radius: 4px;",
+      "  box-shadow: 0 24px 80px rgba(0,0,0,0.7);",
+      "  transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);",
+      "}",
+      ".tattoo-lightbox.is-open img { transform: scale(1); }",
+      ".tattoo-lightbox__close {",
+      "  position: absolute; top: 18px; right: 18px;",
+      "  width: 46px; height: 46px; border-radius: 50%;",
+      "  background: rgba(255,255,255,0.1);",
+      "  border: 1px solid rgba(255,255,255,0.25);",
+      "  color: #fff; font-size: 22px; line-height: 1;",
+      "  display: grid; place-items: center; cursor: pointer;",
+      "  transition: background 0.2s ease;",
+      "}",
+      ".tattoo-lightbox__close:hover { background: rgba(255,255,255,0.22); }",
+      "body.lightbox-open { overflow: hidden; }"
+    ].join("\n");
+    document.head.appendChild(style);
+  })();
 
   /* ---------- Preloader (1.5s mínimo) ---------- */
   (function () {
@@ -38,11 +86,9 @@
         var t = target.getBoundingClientRect();
         var f = from.getBoundingClientRect();
         if (!t.width || !t.height || !f.width || !f.height) return "";
-
         var scale = t.width / f.width;
         var dx = t.left + t.width / 2 - (f.left + f.width / 2);
         var dy = t.top + t.height / 2 - (f.top + f.height / 2);
-
         return (
           "translate(" + dx.toFixed(2) + "px, " + dy.toFixed(2) + "px) " +
           "scale(" + scale.toFixed(4) + ")"
@@ -51,7 +97,6 @@
 
       var logoLand = landOn(heroLogo, pLogo);
       var nameLand = landOn(heroName, pName);
-
       if (logoLand) preloader.style.setProperty("--morph-logo", logoLand);
       if (nameLand) preloader.style.setProperty("--morph-name", nameLand);
 
@@ -78,8 +123,7 @@
   var progressBar = document.getElementById("progressBar");
   if (progressBar) {
     function updateProgress() {
-      var scrollable =
-        document.documentElement.scrollHeight - window.innerHeight;
+      var scrollable = document.documentElement.scrollHeight - window.innerHeight;
       var pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
       progressBar.style.width = pct + "%";
     }
@@ -94,11 +138,8 @@
   var navLinks = document.getElementById("navLinks");
 
   function onScrollNav() {
-    if (window.scrollY > 30) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
-    }
+    if (window.scrollY > 30) navbar.classList.add("scrolled");
+    else navbar.classList.remove("scrolled");
   }
   window.addEventListener("scroll", onScrollNav, { passive: true });
   onScrollNav();
@@ -111,7 +152,6 @@
     document.body.classList.remove("nav-open");
     if (restoreFocus) navToggle.focus();
   }
-
   function openMenu() {
     navLinks.classList.add("open");
     navToggle.classList.add("open");
@@ -122,33 +162,27 @@
     if (first) first.focus();
   }
 
-  navToggle.addEventListener("click", function () {
-    if (navLinks.classList.contains("open")) closeMenu(false);
-    else openMenu();
-  });
-
-  navLinks.addEventListener("click", function (e) {
-    if (e.target.closest("a")) closeMenu(false);
-  });
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && navLinks.classList.contains("open")) closeMenu(true);
-  });
-
-  window.addEventListener(
-    "resize",
-    function () {
+  if (navToggle && navLinks) {
+    navToggle.addEventListener("click", function () {
+      if (navLinks.classList.contains("open")) closeMenu(false);
+      else openMenu();
+    });
+    navLinks.addEventListener("click", function (e) {
+      if (e.target.closest("a")) closeMenu(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navLinks.classList.contains("open")) closeMenu(true);
+    });
+    window.addEventListener("resize", function () {
       if (window.innerWidth > 768 && navLinks.classList.contains("open")) closeMenu(false);
-    },
-    { passive: true }
-  );
+    }, { passive: true });
+  }
 
   /* ---------- Back to top ---------- */
   var backTop = document.getElementById("backTop");
   if (backTop) {
     function onScrollTop() {
-      var show = window.scrollY > 600;
-      backTop.classList.toggle("show", show);
+      backTop.classList.toggle("show", window.scrollY > 600);
     }
     window.addEventListener("scroll", onScrollTop, { passive: true });
     onScrollTop();
@@ -157,7 +191,7 @@
     });
   }
 
-  /* ---------- Reveal on scroll (cascata via .reveal-group) ---------- */
+  /* ---------- Reveal on scroll ---------- */
   var revealEls = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && !prefersReduced) {
     var revealObserver = new IntersectionObserver(
@@ -171,13 +205,9 @@
       },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
-    revealEls.forEach(function (el) {
-      revealObserver.observe(el);
-    });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
   } else {
-    revealEls.forEach(function (el) {
-      el.classList.add("visible");
-    });
+    revealEls.forEach(function (el) { el.classList.add("visible"); });
   }
 
   /* ---------- FAQ accordion ---------- */
@@ -205,7 +235,41 @@
   var ano = document.getElementById("ano");
   if (ano) ano.textContent = new Date().getFullYear();
 
-  /* ---------- Galeria: Drift Wall (port do React Bits, vanilla) ---------- */
+  /* ---------- Lightbox (zoom na tatuagem) ---------- */
+  var lightbox = document.createElement("div");
+  lightbox.className = "tattoo-lightbox";
+  lightbox.setAttribute("aria-hidden", "true");
+  lightbox.innerHTML =
+    '<button class="tattoo-lightbox__close" aria-label="Fechar">×</button>' +
+    '<img alt="Tatuagem ampliada">';
+  document.body.appendChild(lightbox);
+
+  var lbImg = lightbox.querySelector("img");
+  var lbClose = lightbox.querySelector(".tattoo-lightbox__close");
+
+  function openLightbox(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || "";
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lightbox-open");
+  }
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lightbox-open");
+    setTimeout(function () { lbImg.src = ""; }, 300);
+  }
+
+  lbClose.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && lightbox.classList.contains("is-open")) closeLightbox();
+  });
+
+  /* ---------- Galeria: Drift Wall ---------- */
   (function initDriftWall() {
     var wall = document.getElementById("driftWall");
     var plane = document.getElementById("driftPlane");
@@ -223,18 +287,15 @@
       "assets/Portfolio/9.jpg"
     ];
 
-    /* Menos colunas no celular = tiles maiores + menos caos visual.
-       5 colunas no desktop, 3 no celular. */
-    var COLS = isTouch ? 3 : 5;
+    /* --- View: diferente pra desktop vs mobile --- */
+    var VIEW = isTouch
+      ? { cols: 3, scale: 1.0, tilt: 8, turn: 0, depth: 0, parallax: 0 }
+      : { cols: 5, scale: 1.18, tilt: 16, turn: -14, depth: 120, parallax: 0.6 };
+
     var SPEED = 42;
     var VARIANCE = 0.45;
     var DIR_UP = true;
-    var TILT = 16;
-    var TURN = -14;
     var ROLL = 0;
-    var DEPTH = 120;
-    /* Sem parallax no touch: o tilt automático travava a rolagem da página. */
-    var PARALLAX = isTouch ? 0 : 0.6;
 
     var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
 
@@ -250,6 +311,7 @@
     var lastTs = null;
     var raf = null;
     var resizeTimer = null;
+    var builtCols = VIEW.cols;
 
     function isReduced() {
       return prefersReduced || (mq && mq.matches);
@@ -269,9 +331,11 @@
 
     function applyPlane(px, py) {
       plane.style.transform =
-        "translate(-50%, -50%) scale(1.18) " +
-        "rotateX(" + (TILT + py) + "deg) rotateY(" + (TURN + px) + "deg) rotateZ(" + ROLL + "deg) " +
-        "translateZ(" + -DEPTH + "px)";
+        "translate(-50%, -50%) scale(" + VIEW.scale + ") " +
+        "rotateX(" + (VIEW.tilt + py) + "deg) " +
+        "rotateY(" + (VIEW.turn + px) + "deg) " +
+        "rotateZ(" + ROLL + "deg) " +
+        "translateZ(" + -VIEW.depth + "px)";
     }
 
     function activate(tile) {
@@ -288,10 +352,7 @@
     }
 
     function build() {
-      if (raf) {
-        cancelAnimationFrame(raf);
-        raf = null;
-      }
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
       lastTs = null;
       plane.innerHTML = "";
       tracks = [];
@@ -304,6 +365,8 @@
       var m = readMetrics();
       var dirSign = DIR_UP ? 1 : -1;
       var reduced = isReduced();
+      var COLS = VIEW.cols;
+      builtCols = COLS;
 
       for (var c = 0; c < COLS; c++) {
         var colItems = [];
@@ -320,6 +383,7 @@
         var distFromCenter = Math.abs(c - (COLS - 1) / 2) / Math.max(1, (COLS - 1) / 2);
         var colDim = 0.5 + (1 - distFromCenter) * 0.22;
         colEl.style.setProperty("--dw-dim", colDim.toFixed(3));
+
         var track = document.createElement("div");
         track.className = "drift-wall__track";
 
@@ -329,6 +393,7 @@
             tile.className = "drift-wall__tile";
             tile.setAttribute("data-tile-id", c + "-" + k + "-" + idx);
             tile.setAttribute("data-col", c);
+            tile.setAttribute("data-src", src);
 
             var inner = document.createElement("span");
             inner.className = "drift-wall__inner";
@@ -338,9 +403,7 @@
             img.alt = "";
             img.decoding = "async";
             img.draggable = false;
-            img.addEventListener("error", function () {
-              tile.style.display = "none";
-            });
+            img.addEventListener("error", function () { tile.style.display = "none"; });
 
             var ov = document.createElement("span");
             ov.className = "drift-wall__overlay";
@@ -349,7 +412,6 @@
             inner.appendChild(img);
             inner.appendChild(ov);
             tile.appendChild(inner);
-
             track.appendChild(tile);
           });
         }
@@ -380,7 +442,7 @@
       var dt = Math.min(0.05, Math.max(0, (ts - lastTs) / 1000));
       lastTs = ts;
 
-      var maxTilt = PARALLAX * 8;
+      var maxTilt = VIEW.parallax * 8;
       var tx = pointer.x * maxTilt;
       var ty = -pointer.y * maxTilt;
       var damp = 1 - Math.exp(-dt / 0.12);
@@ -402,13 +464,12 @@
       raf = requestAnimationFrame(animate);
     }
 
-    /* Interações de hover só fazem sentido em desktop (mouse).
-       Em touch, ignoramos para evitar que a galeria trave ao rolar a página. */
+    /* Hover de coluna só em desktop */
     if (!isTouch) {
       wall.addEventListener("pointermove", function (e) {
         if (e.pointerType && e.pointerType !== "mouse") return;
         var rect = wall.getBoundingClientRect();
-        if (PARALLAX > 0 && !isReduced()) {
+        if (VIEW.parallax > 0 && !isReduced()) {
           pointer.x = (e.clientX - rect.left) / rect.width - 0.5;
           pointer.y = (e.clientY - rect.top) / rect.height - 0.5;
         }
@@ -418,7 +479,6 @@
         if (tile === activeTile) return;
         activate(tile);
       });
-
       wall.addEventListener("pointerleave", function () {
         pointer.x = 0;
         pointer.y = 0;
@@ -426,14 +486,27 @@
       });
     }
 
-    window.addEventListener(
-      "resize",
-      function () {
-        if (resizeTimer) clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(build, 220);
-      },
-      { passive: true }
-    );
+    /* Click na tile → abre lightbox (desktop e mobile) */
+    wall.addEventListener("click", function (e) {
+      var tile = e.target.closest ? e.target.closest("[data-tile-id]") : null;
+      if (!tile || !wall.contains(tile)) return;
+      var src = tile.getAttribute("data-src");
+      if (src) openLightbox(src, "Tatuagem de Willian Souza");
+    });
+
+    window.addEventListener("resize", function () {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        /* Se mudou o breakpoint (mobile <-> desktop), refaz o build */
+        var nextCols = isTouch ? 3 : 5;
+        if (nextCols !== builtCols) {
+          VIEW = isTouch
+            ? { cols: 3, scale: 1.0, tilt: 8, turn: 0, depth: 0, parallax: 0 }
+            : { cols: 5, scale: 1.18, tilt: 16, turn: -14, depth: 120, parallax: 0.6 };
+        }
+        build();
+      }, 220);
+    }, { passive: true });
 
     if (mq) {
       if (mq.addEventListener) mq.addEventListener("change", build);
@@ -444,19 +517,15 @@
       build();
       requestAnimationFrame(function () {
         applyPlane(damped.x, damped.y);
-        setTimeout(function () {
-          applyPlane(damped.x, damped.y);
-        }, 60);
+        setTimeout(function () { applyPlane(damped.x, damped.y); }, 60);
       });
     }
 
-    if (document.readyState === "complete") {
-      firstPaint();
-    } else {
+    if (document.readyState === "complete") firstPaint();
+    else {
       window.addEventListener("load", firstPaint);
       setTimeout(firstPaint, 300);
     }
-
   })();
 
 })();
