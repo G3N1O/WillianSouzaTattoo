@@ -233,15 +233,15 @@
     if (!wall || !plane) return;
 
     var IMAGES = [
-      "assets/Portfolio/1.jpg",
-      "assets/Portfolio/2.jpg",
-      "assets/Portfolio/3.jpg",
-      "assets/Portfolio/4.jpg",
-      "assets/Portfolio/5.jpg",
-      "assets/Portfolio/6.jpg",
-      "assets/Portfolio/7.jpg",
-      "assets/Portfolio/8.jpg",
-      "assets/Portfolio/9.jpg"
+      "assets/Portfolio/1.webp",
+      "assets/Portfolio/2.webp",
+      "assets/Portfolio/3.webp",
+      "assets/Portfolio/4.webp",
+      "assets/Portfolio/5.webp",
+      "assets/Portfolio/6.webp",
+      "assets/Portfolio/7.webp",
+      "assets/Portfolio/8.webp",
+      "assets/Portfolio/9.webp"
     ];
 
     var VIEW = isTouch
