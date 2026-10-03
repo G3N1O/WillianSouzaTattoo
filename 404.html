@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página não encontrada | Willian Souza</title>
+  <meta name="robots" content="noindex, follow">
+
+  <!-- O CSS desta página vai embutido de propósito. Numa página 404 o
+       endereço pode ter uma pasta a mais (/algo/que/nao-existe), e um
+       caminho relativo para o style.css quebraria. Embutindo, funciona
+       em qualquer nível. -->
+  <style>
+    :root {
+      --abyss: #0d0f12;
+      --surface: #212529;
+      --c-100: #f8f9fa;
+      --c-200: #adb5bd;
+      --c-500: #6c757d;
+      --line: rgba(248, 249, 250, 0.08);
+      --font-head: "Barlow Condensed", "Arial Narrow", sans-serif;
+      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 2rem 1.5rem;
+      background:
+        radial-gradient(70% 55% at 50% 8%, rgba(173, 181, 189, 0.09), transparent 62%),
+        var(--abyss);
+      color: var(--c-200);
+      font-family: var(--font-body);
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .nf { max-width: 34rem; }
+
+    .nf-code {
+      font-family: var(--font-head);
+      font-size: clamp(5rem, 18vw, 9rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: 0.06em;
+      color: var(--c-100);
+      opacity: 0.09;
+      user-select: none;
+    }
+
+    .nf-title {
+      margin: -0.35em 0 0;
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 7vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--c-100);
+    }
+
+    .nf-text {
+      margin: 1.5rem auto 0;
+      max-width: 30rem;
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .nf-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .nf-btn {
+      display: inline-block;
+      padding: 1rem 2.25rem;
+      border-radius: 999px;
+      font-family: var(--font-head);
+      font-size: 1.125rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .nf-btn--primary {
+      background: var(--c-100);
+      color: var(--abyss);
+    }
+
+    .nf-btn--primary:hover { background: var(--c-200); }
+
+    .nf-btn--ghost {
+      border-color: var(--line);
+      color: var(--c-200);
+    }
+
+    .nf-btn--ghost:hover { border-color: var(--c-200); color: var(--c-100); }
+
+    .nf-links {
+      margin: 3rem 0 0;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem 1.75rem;
+    }
+
+    .nf-links a {
+      color: var(--c-500);
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .nf-links a:hover { color: var(--c-200); }
+
+    :focus-visible {
+      outline: 2px solid var(--c-200);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="nf">
+    <p class="nf-code" aria-hidden="true">404</p>
+    <h1 class="nf-title">Página não encontrada</h1>
+    <p class="nf-text">
+      O endereço que você abriu não existe ou foi movido. Talvez tenha sido
+      um erro de digitação. Dá para voltar ao início ou falar direto com o
+      Willian no WhatsApp.
+    </p>
+
+    <div class="nf-actions">
+      <a class="nf-btn nf-btn--primary" href="./">Ir para o início</a>
+      <a class="nf-btn nf-btn--ghost" href="https://wa.me/5511950869752?text=Ol%C3%A1%21%20Vi%20um%20erro%20no%20site.">Falar no WhatsApp</a>
+    </div>
+
+    <nav class="nf-links" aria-label="Seções do site">
+      <a href="./#galeria">Galeria</a>
+      <a href="./#artista">O artista</a>
+      <a href="./#como-funciona">Como funciona</a>
+      <a href="./#depoimentos">Depoimentos</a>
+      <a href="./#faq">Perguntas</a>
+    </nav>
+  </main>
+</body>
+</html>

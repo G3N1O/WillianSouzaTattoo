@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Sem domínio próprio ainda, o endereço canônico é o do GitHub Pages.
+# Quando comprar o domínio, troque a linha abaixo e atualize o sitemap.xml.
+Sitemap: https://g3n1o.github.io/WillianSouzaTattoo/sitemap.xml
