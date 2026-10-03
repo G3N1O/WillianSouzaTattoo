@@ -110,30 +110,38 @@
     setTimeout(finish, MAX_TIME);
   })();
 
-  /* ---------- Scroll progress ---------- */
+  /* ---------- Estado na rolagem: barra de progresso, navbar e voltar ao topo ----------
+     Um único listener e um único requestAnimationFrame por quadro, no lugar de três
+     listeners independentes — assim o layout é lido no máximo uma vez por quadro. */
   var progressBar = document.getElementById("progressBar");
-  if (progressBar) {
-    function updateProgress() {
-      var scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      var pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-      progressBar.style.width = pct + "%";
-    }
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    window.addEventListener("resize", updateProgress, { passive: true });
-    updateProgress();
-  }
-
-  /* ---------- Navbar ---------- */
   var navbar = document.getElementById("navbar");
   var navToggle = document.getElementById("navToggle");
   var navLinks = document.getElementById("navLinks");
+  var backTop = document.getElementById("backTop");
 
-  function onScrollNav() {
-    if (window.scrollY > 30) navbar.classList.add("scrolled");
-    else navbar.classList.remove("scrolled");
+  var scrollFrame = null;
+
+  function applyScrollState() {
+    scrollFrame = null;
+    var y = window.scrollY;
+    var scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = scrollable > 0 ? (y / scrollable) * 100 : 0;
+
+    if (progressBar) progressBar.style.width = pct + "%";
+    if (navbar) navbar.classList.toggle("scrolled", y > 30);
+    if (backTop) backTop.classList.toggle("show", y > 600);
   }
-  window.addEventListener("scroll", onScrollNav, { passive: true });
-  onScrollNav();
+
+  function queueScrollState() {
+    if (scrollFrame !== null) return;
+    scrollFrame = requestAnimationFrame(applyScrollState);
+  }
+
+  window.addEventListener("scroll", queueScrollState, { passive: true });
+  window.addEventListener("resize", queueScrollState, { passive: true });
+  applyScrollState();
+
+  /* ---------- Navbar ---------- */
 
   function closeMenu(restoreFocus) {
     navLinks.classList.remove("open");
@@ -170,13 +178,7 @@
   }
 
   /* ---------- Back to top ---------- */
-  var backTop = document.getElementById("backTop");
   if (backTop) {
-    function onScrollTop() {
-      backTop.classList.toggle("show", window.scrollY > 600);
-    }
-    window.addEventListener("scroll", onScrollTop, { passive: true });
-    onScrollTop();
     backTop.addEventListener("click", function () {
       window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" });
     });
@@ -458,18 +460,33 @@
 
     /* Hover de coluna só em desktop */
     if (!isTouch) {
-      wall.addEventListener("pointermove", function (e) {
-        if (e.pointerType && e.pointerType !== "mouse") return;
+      var moveQueued = false;
+      var moveX = 0;
+      var moveY = 0;
+
+      /* getBoundingClientRect + elementFromPoint são caros: rodam uma vez por
+         quadro, com a última posição do ponteiro, em vez de uma por evento. */
+      function runPointerMove() {
+        moveQueued = false;
         var rect = wall.getBoundingClientRect();
         if (VIEW.parallax > 0 && !isReduced()) {
-          pointer.x = (e.clientX - rect.left) / rect.width - 0.5;
-          pointer.y = (e.clientY - rect.top) / rect.height - 0.5;
+          pointer.x = (moveX - rect.left) / rect.width - 0.5;
+          pointer.y = (moveY - rect.top) / rect.height - 0.5;
         }
-        var hit = document.elementFromPoint(e.clientX, e.clientY);
+        var hit = document.elementFromPoint(moveX, moveY);
         var tile = hit && hit.closest ? hit.closest("[data-tile-id]") : null;
         if (!tile || !wall.contains(tile)) return;
         if (tile === activeTile) return;
         activate(tile);
+      }
+
+      wall.addEventListener("pointermove", function (e) {
+        if (e.pointerType && e.pointerType !== "mouse") return;
+        moveX = e.clientX;
+        moveY = e.clientY;
+        if (moveQueued) return;
+        moveQueued = true;
+        requestAnimationFrame(runPointerMove);
       });
       wall.addEventListener("pointerleave", function () {
         pointer.x = 0;
@@ -519,7 +536,14 @@
       else if (mq.addListener) mq.addListener(build);
     }
 
+    /* Os métodos lidos aqui (--dw-tile-h, --dw-gap e a altura do palco) vêm só de
+       CSS/viewport, então não mudam depois do load: pintar uma única vez basta.
+       Sem a guarda, o timeout de 300 ms e o evento load construíam a galeria duas
+       vezes, destruindo os tiles e reiniciando a deriva. */
+    var painted = false;
     function firstPaint() {
+      if (painted) return;
+      painted = true;
       build();
       requestAnimationFrame(function () {
         applyPlane(damped.x, damped.y);
