@@ -92,6 +92,8 @@
 
 <body class="bg-abyss text-paper font-[Inter] antialiased overflow-x-hidden">
 
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__content">
       <img class="preloader-logo" src="assets/Logo/logo.webp" alt="">
@@ -127,7 +129,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="conteudo" tabindex="-1">
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="inicio">
@@ -136,7 +138,7 @@
       <div class="container relative z-10 flex items-center justify-center">
         <div class="hero-brand rise rise-1">
           <img class="hero-logo" src="assets/Logo/logo.webp" alt="Willian Souza">
-          <p class="hero-name">Willian Souza <span>|</span> Tatuador</p>
+          <h1 class="hero-name">Willian Souza <span>|</span> Tatuador</h1>
           <a class="hero-sub-cta rise rise-2" href="https://wa.me/5511950869752" target="_blank" rel="noopener" aria-label="Tatuagens feitas com alma — pedir orçamento no WhatsApp">
             Tatuagens feitas com alma <span class="hero-sub-cta__arrow" aria-hidden="true">→</span>
           </a>
@@ -145,18 +147,18 @@
     </section>
 
     <!-- ===== MARQUEE / PROVA ===== -->
-    <div class="marquee" aria-hidden="true">
+    <div class="marquee">
       <div class="marquee-track">
         <span class="marquee-item">Blackwork <span>•</span></span>
         <span class="marquee-item">Traço fino <span>•</span></span>
         <span class="marquee-item">Arte autoral <span>•</span></span>
         <span class="marquee-item">Design exclusivo <span>•</span></span>
         <span class="marquee-item">Cotia · SP <span>•</span></span>
-        <span class="marquee-item">Blackwork <span>•</span></span>
-        <span class="marquee-item">Traço fino <span>•</span></span>
-        <span class="marquee-item">Arte autoral <span>•</span></span>
-        <span class="marquee-item">Design exclusivo <span>•</span></span>
-        <span class="marquee-item">Cotia · SP <span>•</span></span>
+        <span class="marquee-item" aria-hidden="true">Blackwork <span>•</span></span>
+        <span class="marquee-item" aria-hidden="true">Traço fino <span>•</span></span>
+        <span class="marquee-item" aria-hidden="true">Arte autoral <span>•</span></span>
+        <span class="marquee-item" aria-hidden="true">Design exclusivo <span>•</span></span>
+        <span class="marquee-item" aria-hidden="true">Cotia · SP <span>•</span></span>
       </div>
     </div>
 
@@ -291,35 +293,35 @@
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-1">
               Como faço o orçamento?
-              <span class="acc-icon">+</span>
+              <span class="acc-icon" aria-hidden="true">+</span>
             </button>
             <div class="acc-panel" id="faq-panel-1"><p>Chame no WhatsApp com uma foto da referência, a região do corpo e o tamanho aproximado. Você recebe retorno com prazo e valor.</p></div>
           </div>
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-2">
               Quanto custa uma tatuagem?
-              <span class="acc-icon">+</span>
+              <span class="acc-icon" aria-hidden="true">+</span>
             </button>
             <div class="acc-panel" id="faq-panel-2"><p>Depende do tamanho, do detalhamento e da área do corpo. O valor é fechado com você antes de qualquer agendamento — sem surpresa.</p></div>
           </div>
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-3">
               Posso levar uma arte pronta?
-              <span class="acc-icon">+</span>
+              <span class="acc-icon" aria-hidden="true">+</span>
             </button>
             <div class="acc-panel" id="faq-panel-3"><p>Pode levar referências. Mas a tatuagem final é sempre desenhada do zero, na medida certa pro seu corpo — este é o nosso selo.</p></div>
           </div>
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-4">
               Dói muito?
-              <span class="acc-icon">+</span>
+              <span class="acc-icon" aria-hidden="true">+</span>
             </button>
             <div class="acc-panel" id="faq-panel-4"><p>Cada região tem uma sensibilidade diferente. A gente conversa sobre isso antes e você vai preparado — a maioria descreve como um arranhão forte.</p></div>
           </div>
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-5">
               Como é o cuidado depois?
-              <span class="acc-icon">+</span>
+              <span class="acc-icon" aria-hidden="true">+</span>
             </button>
             <div class="acc-panel" id="faq-panel-5"><p>Você sai com orientação completa de cicatrização e meu canal aberto pra qualquer dúvida durante as semanas seguintes.</p></div>
           </div>
