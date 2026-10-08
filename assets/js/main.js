@@ -42,9 +42,11 @@
       "    --dw-tile-w: calc((100vw - 2 * var(--dw-gap)) / 3) !important;",
       "  }",
       "}",
-      /* Aceleração de GPU */
-      ".drift-wall__plane, .drift-wall__track, .drift-wall__inner {",
-      "  will-change: transform;",
+      /* Aceleração de GPU - APENAS em desktop */
+      "@media (min-width: 641px) {",
+      "  .drift-wall__plane, .drift-wall__track, .drift-wall__inner {",
+      "    will-change: transform;",
+      "  }",
       "}"
     ].join("\n");
     document.head.appendChild(style);
@@ -247,10 +249,10 @@
     ];
 
     var VIEW = isTouch
-      ? { cols: 3, scale: 1.0, tilt: 8, turn: 0, depth: 0, parallax: 0 }
+      ? { cols: 3, scale: 1.0, tilt: 0, turn: 0, depth: 0, parallax: 0 }
       : { cols: 5, scale: 1.18, tilt: 16, turn: -14, depth: 120, parallax: 0.6 };
 
-    var SPEED = 42;
+    var SPEED = isTouch ? 18 : 42;
     var VARIANCE = 0.45;
     var DIR_UP = true;
     var ROLL = 0;
@@ -524,7 +526,7 @@
         var nextCols = isTouch ? 3 : 5;
         if (nextCols !== builtCols) {
           VIEW = isTouch
-            ? { cols: 3, scale: 1.0, tilt: 8, turn: 0, depth: 0, parallax: 0 }
+            ? { cols: 3, scale: 1.0, tilt: 0, turn: 0, depth: 0, parallax: 0 }
             : { cols: 5, scale: 1.18, tilt: 16, turn: -14, depth: 120, parallax: 0.6 };
         }
         build();
