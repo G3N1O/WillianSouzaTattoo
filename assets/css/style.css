@@ -702,7 +702,8 @@ section {
   overflow: hidden;
   border: 1px solid rgba(173, 181, 189, 0.14);
   border-radius: 18px;
-  padding: 1rem;
+  min-height: clamp(28rem, 42vw, 34rem);
+  padding: 2rem 1.8rem;
   background: linear-gradient(165deg, rgba(33, 37, 41, 0.8), rgba(18, 20, 23, 0.9));
   transition: border-color 0.3s ease, transform 0.3s ease;
 }
@@ -712,27 +713,34 @@ section {
   transform: translateY(-4px);
 }
 
-/* Mostra a tatuagem inteira em uma área ampla, sem recortar a foto. */
+/* Mantém a foto como fundo do card, ampliando a área visível da tatuagem. */
 .quote-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   width: 100%;
-  height: clamp(22rem, 40vw, 32rem);
-  object-fit: contain;
-  background: rgba(0, 0, 0, 0.18);
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.25;
+  filter: saturate(0.8);
   pointer-events: none;
 }
 
 /* Conteúdo do card sempre acima do fundo */
-.quote-card > :not(.quote-bg) {
+.quote-card > :not(.quote-bg):not(.quote-print) {
   position: relative;
   z-index: 1;
 }
 
 /* Print do feedback (tira larga ~5:1, altura natural) */
 .quote-print {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
   display: block;
-  width: 100%;
+  width: min(85%, 24rem);
   height: auto;
-  margin-top: 1.25rem;
+  margin-top: 0;
   border-radius: 10px;
   border: 1px solid rgba(173, 181, 189, 0.22);
   background: #f8f9fa;
