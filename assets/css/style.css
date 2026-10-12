@@ -1126,6 +1126,12 @@ section {
   }
 }
 
+@media (max-width: 767px) {
+  body .container {
+    width: calc(100% - 2rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
