@@ -151,10 +151,49 @@
       </div>
 
       <div class="galeria-stage reveal">
-        <div class="drift-wrap">
-          <div class="drift-wall" id="driftWall" role="img" aria-label="Galeria de tatuagens autorais de Willian Souza">
-            <div class="drift-wall__plane" id="driftPlane" aria-hidden="true"></div>
+        <div class="circular-gallery-shell">
+          <div class="circular-gallery" id="portfolioGallery" role="region" aria-label="Galeria circular de tatuagens autorais" tabindex="0">
+            <div class="circular-gallery__track">
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 1 de 9">
+                <img src="assets/Portfolio/1.webp" alt="Tatuagem autoral de Willian Souza, imagem 1 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 2 de 9">
+                <img src="assets/Portfolio/2.webp" alt="Tatuagem autoral de Willian Souza, imagem 2 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 3 de 9">
+                <img src="assets/Portfolio/3.webp" alt="Tatuagem autoral de Willian Souza, imagem 3 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 4 de 9">
+                <img src="assets/Portfolio/4.webp" alt="Tatuagem autoral de Willian Souza, imagem 4 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 5 de 9">
+                <img src="assets/Portfolio/5.webp" alt="Tatuagem autoral de Willian Souza, imagem 5 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 6 de 9">
+                <img src="assets/Portfolio/6.webp" alt="Tatuagem autoral de Willian Souza, imagem 6 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 7 de 9">
+                <img src="assets/Portfolio/7.webp" alt="Tatuagem autoral de Willian Souza, imagem 7 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 8 de 9">
+                <img src="assets/Portfolio/8.webp" alt="Tatuagem autoral de Willian Souza, imagem 8 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+              <button class="circular-gallery__item" type="button" aria-label="Ampliar tatuagem 9 de 9">
+                <img src="assets/Portfolio/9.webp" alt="Tatuagem autoral de Willian Souza, imagem 9 de 9" loading="lazy" decoding="async" draggable="false">
+              </button>
+            </div>
           </div>
+
+          <div class="circular-gallery__controls" role="group" aria-label="Controles da galeria">
+            <button class="circular-gallery__control" type="button" data-gallery-previous aria-label="Tatuagem anterior">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <span class="circular-gallery__status" aria-live="polite" aria-atomic="true">1 / 9</span>
+            <button class="circular-gallery__control" type="button" data-gallery-next aria-label="Próxima tatuagem">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <p class="circular-gallery__hint">Arraste para explorar · Use as setas ou toque em uma imagem para ampliar</p>
         </div>
       </div>
 
@@ -162,6 +201,22 @@
         <a href="https://www.instagram.com/w_stattoo/" target="_blank" rel="noopener">Ver todas no Instagram <span aria-hidden="true">↗</span></a>
       </div>
     </section>
+
+    <dialog class="gallery-lightbox" id="galleryLightbox" aria-label="Tatuagem ampliada">
+      <div class="gallery-lightbox__content">
+        <button class="gallery-lightbox__close" type="button" data-gallery-close aria-label="Fechar imagem ampliada">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"/></svg>
+        </button>
+        <button class="gallery-lightbox__control gallery-lightbox__previous" type="button" data-lightbox-previous aria-label="Tatuagem anterior">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <img class="gallery-lightbox__image" src="assets/Portfolio/1.webp" alt="Tatuagem autoral de Willian Souza, imagem 1 de 9">
+        <button class="gallery-lightbox__control gallery-lightbox__next" type="button" data-lightbox-next aria-label="Próxima tatuagem">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <p class="gallery-lightbox__status" aria-live="polite" aria-atomic="true"></p>
+      </div>
+    </dialog>
 
     <!-- ===== ARTISTA ===== -->
     <section class="container py-16 lg:py-20" id="artista">
@@ -357,5 +412,6 @@
   </button>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/circular-gallery.js"></script>
 </body>
 </html>
