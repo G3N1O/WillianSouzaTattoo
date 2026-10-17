@@ -14,44 +14,6 @@
     isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
   }
 
-  /* ---------- CSS injetado ---------- */
-  (function injectStyles() {
-    var style = document.createElement("style");
-    style.setAttribute("data-injected", "main-js");
-    style.textContent = [
-      /* Libera rolagem vertical por cima da galeria */
-      ".galeria-stage, .drift-wrap, .drift-wall, .drift-wall__plane, .drift-wall__col, .drift-wall__track {",
-      "  touch-action: pan-y !important;",
-      "}",
-      /* Overlay mais transparente = imagens mais visíveis */
-      ".drift-wall__overlay { opacity: 0.15 !important; }",
-      /* Galeria: cursor + zoom no clique */
-      ".drift-wall__tile { cursor: zoom-in; overflow: visible !important; }",
-      ".drift-wall__inner {",
-      "  transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1),",
-      "              box-shadow 0.4s cubic-bezier(0.22,0.61,0.36,1) !important;",
-      "}",
-      ".drift-wall__tile.is-zoomed { z-index: 20; cursor: zoom-out; }",
-      ".drift-wall__tile.is-zoomed .drift-wall__inner {",
-      "  transform: scale(1.2);",
-      "  box-shadow: 0 24px 60px rgba(0,0,0,0.55);",
-      "}",
-      /* Mobile: 3 colunas que cabem exatamente na tela */
-      "@media (max-width: 640px) {",
-      "  .drift-wall {",
-      "    --dw-tile-w: calc((100vw - 2 * var(--dw-gap)) / 3) !important;",
-      "  }",
-      "}",
-      /* Aceleração de GPU - APENAS em desktop */
-      "@media (min-width: 641px) {",
-      "  .drift-wall__plane, .drift-wall__track, .drift-wall__inner {",
-      "    will-change: transform;",
-      "  }",
-      "}"
-    ].join("\n");
-    document.head.appendChild(style);
-  })();
-
   /* ---------- Preloader ---------- */
   (function () {
     var preloader = document.getElementById("preloader");
