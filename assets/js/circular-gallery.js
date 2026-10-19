@@ -58,7 +58,8 @@
 
     if (nextActiveIndex !== activeIndex) {
       activeIndex = nextActiveIndex;
-      counter.textContent = (activeIndex + 1) + " / " + cards.length;
+      // Only update counter if the element exists (page may have removed it)
+      if (counter) counter.textContent = (activeIndex + 1) + " / " + cards.length;
     }
   }
 
@@ -107,7 +108,8 @@
     var image = card.querySelector("img");
     dialogImage.src = image.currentSrc || image.src;
     dialogImage.alt = image.alt;
-    dialogCounter.textContent = (dialogIndex + 1) + " / " + cards.length;
+    // Update dialog counter only if present
+    if (dialogCounter) dialogCounter.textContent = (dialogIndex + 1) + " / " + cards.length;
     target = position + shortestOffset(dialogIndex);
     animate();
   }
@@ -195,21 +197,19 @@
     }, 140);
   }, { passive: false });
 
-  document.querySelector("[data-gallery-previous]").addEventListener("click", function () {
-    moveBy(-1);
-  });
-  document.querySelector("[data-gallery-next]").addEventListener("click", function () {
-    moveBy(1);
-  });
-  dialog.querySelector("[data-gallery-close]").addEventListener("click", function () {
-    dialog.close();
-  });
-  dialog.querySelector("[data-lightbox-previous]").addEventListener("click", function () {
-    updateDialog(dialogIndex - 1);
-  });
-  dialog.querySelector("[data-lightbox-next]").addEventListener("click", function () {
-    updateDialog(dialogIndex + 1);
-  });
+  var prevBtn = document.querySelector("[data-gallery-previous]");
+  var nextBtn = document.querySelector("[data-gallery-next]");
+  if (prevBtn) prevBtn.addEventListener("click", function () { moveBy(-1); });
+  if (nextBtn) nextBtn.addEventListener("click", function () { moveBy(1); });
+
+  var closeBtn = dialog.querySelector("[data-gallery-close]");
+  if (closeBtn) closeBtn.addEventListener("click", function () { dialog.close(); });
+
+  var dlgPrev = dialog.querySelector("[data-lightbox-previous]");
+  var dlgNext = dialog.querySelector("[data-lightbox-next]");
+  if (dlgPrev) dlgPrev.addEventListener("click", function () { updateDialog(dialogIndex - 1); });
+  if (dlgNext) dlgNext.addEventListener("click", function () { updateDialog(dialogIndex + 1); });
+
   dialog.addEventListener("click", function (event) {
     if (event.target === dialog) dialog.close();
   });
