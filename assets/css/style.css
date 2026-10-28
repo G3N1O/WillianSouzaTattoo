@@ -1,7 +1,7 @@
 .hero-scroll-indicator {
   position: absolute;
   left: 50%;
-  bottom: 0.75rem;
+  bottom: 0.35rem;
   transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
@@ -31,7 +31,7 @@
 
 @media (max-width: 640px) {
   .hero-scroll-indicator {
-    bottom: 0.75rem;
+    bottom: 0.3rem;
     width: 2.8rem;
     height: 2.8rem;
   }
