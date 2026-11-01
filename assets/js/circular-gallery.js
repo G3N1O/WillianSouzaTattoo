@@ -6,6 +6,8 @@
   if (!gallery || !dialog) return;
 
   var cards = Array.from(gallery.querySelectorAll(".circular-gallery__item"));
+  if (!cards.length) return;
+
   var track = gallery.querySelector(".circular-gallery__track");
   var counter = document.querySelector(".circular-gallery__status");
   var dialogImage = dialog.querySelector(".gallery-lightbox__image");
@@ -32,7 +34,10 @@
 
   function render() {
     var galleryWidth = gallery.clientWidth;
-    var itemWidth = cards[0].offsetWidth;
+    var firstCard = cards[0];
+    if (!firstCard) return;
+
+    var itemWidth = firstCard.offsetWidth;
     var radius = itemWidth * 1.65;
     var stepAngle = galleryWidth < 640 ? 34 : galleryWidth < 1024 ? 28 : 23;
     var nextActiveIndex = wrapIndex(Math.round(position));
@@ -58,7 +63,6 @@
 
     if (nextActiveIndex !== activeIndex) {
       activeIndex = nextActiveIndex;
-      // Only update counter if the element exists (page may have removed it)
       if (counter) counter.textContent = (activeIndex + 1) + " / " + cards.length;
     }
   }
@@ -105,10 +109,13 @@
   function updateDialog(index) {
     dialogIndex = wrapIndex(index);
     var card = cards[dialogIndex];
+    if (!card) return;
+
     var image = card.querySelector("img");
+    if (!image || !dialogImage) return;
+
     dialogImage.src = image.currentSrc || image.src;
     dialogImage.alt = image.alt;
-    // Update dialog counter only if present
     if (dialogCounter) dialogCounter.textContent = (dialogIndex + 1) + " / " + cards.length;
     target = position + shortestOffset(dialogIndex);
     animate();
