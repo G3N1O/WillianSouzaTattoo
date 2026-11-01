@@ -8,6 +8,10 @@
   var cards = Array.from(gallery.querySelectorAll(".circular-gallery__item"));
   if (!cards.length) return;
 
+  var reducedMotion = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : { matches: false, addListener: null, removeListener: null, addEventListener: null, removeEventListener: null };
+
   var track = gallery.querySelector(".circular-gallery__track");
   var counter = document.querySelector(".circular-gallery__status");
   var dialogImage = dialog.querySelector(".gallery-lightbox__image");
@@ -21,7 +25,6 @@
   var snapTimer = 0;
   var drag = null;
   var suppressClick = false;
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function wrapIndex(index) {
     return ((index % cards.length) + cards.length) % cards.length;
@@ -70,7 +73,7 @@
   function animate() {
     if (animationFrame) return;
 
-    if (reducedMotion.matches) {
+    if (reducedMotion && reducedMotion.matches) {
       position = target;
       render();
       gallery.classList.remove("is-moving");
@@ -107,24 +110,28 @@
   }
 
   function updateDialog(index) {
-    dialogIndex = wrapIndex(index);
-    var card = cards[dialogIndex];
-    if (!card) return;
+    var normalizedIndex = wrapIndex(index);
+    var card = cards[normalizedIndex];
+    if (!card || !dialogImage) return;
 
     var image = card.querySelector("img");
-    if (!image || !dialogImage) return;
+    if (!image) return;
 
+    dialogIndex = normalizedIndex;
     dialogImage.src = image.currentSrc || image.src;
     dialogImage.alt = image.alt;
+
     if (dialogCounter) dialogCounter.textContent = (dialogIndex + 1) + " / " + cards.length;
+
     target = position + shortestOffset(dialogIndex);
     animate();
   }
 
   function openDialog(index) {
-    openerCard = cards[index];
-    updateDialog(index);
-    if (!dialog.open) dialog.showModal();
+    var normalizedIndex = wrapIndex(index);
+    openerCard = cards[normalizedIndex];
+    updateDialog(normalizedIndex);
+    if (dialog && typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
   }
 
   cards.forEach(function (card, index) {
@@ -161,7 +168,9 @@
       startPosition: position,
       moved: false
     };
-    event.target.setPointerCapture(event.pointerId);
+    if (event.target && typeof event.target.setPointerCapture === "function") {
+      event.target.setPointerCapture(event.pointerId);
+    }
   });
 
   gallery.addEventListener("pointermove", function (event) {
@@ -220,6 +229,7 @@
   dialog.addEventListener("click", function (event) {
     if (event.target === dialog) dialog.close();
   });
+
   dialog.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
@@ -229,6 +239,7 @@
       updateDialog(dialogIndex + 1);
     }
   });
+
   dialog.addEventListener("close", function () {
     if (openerCard) openerCard.focus({ preventScroll: true });
   });
@@ -239,5 +250,7 @@
   } else {
     window.addEventListener("resize", render, { passive: true });
   }
+
   render();
 })();
+
