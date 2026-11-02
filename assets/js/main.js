@@ -122,7 +122,7 @@
     navToggle.setAttribute("aria-label", "Fechar menu");
     document.body.classList.add("nav-open");
     var first = navLinks.querySelector("a");
-    if (first) first.focus();
+    if (first) first.focus({ preventScroll: true });
   }
 
   if (navToggle && navLinks) {
