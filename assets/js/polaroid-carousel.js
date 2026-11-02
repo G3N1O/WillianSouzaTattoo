@@ -5,8 +5,10 @@
   if (!carousel) return;
 
   var viewport = carousel.querySelector("[data-carousel-viewport]");
-  var slides = Array.prototype.slice.call(carousel.querySelectorAll(".polaroid-carousel__slide"));
-  var cards = slides.map(function (slide) { return slide.querySelector(".polaroid-card"); });
+  var track = carousel.querySelector("[data-carousel-track]");
+  var originalSlides = track
+    ? Array.prototype.slice.call(track.querySelectorAll(".polaroid-carousel__slide"))
+    : [];
   var previousButton = carousel.querySelector("[data-carousel-previous]");
   var nextButton = carousel.querySelector("[data-carousel-next]");
   var autoplayButton = carousel.querySelector("[data-carousel-autoplay]");
@@ -18,16 +20,47 @@
   var dialogNext = dialog && dialog.querySelector("[data-lightbox-next]");
   var dialogClose = dialog && dialog.querySelector("[data-gallery-close]");
 
-  if (!viewport || !slides.length) return;
+  if (!viewport || !track || !originalSlides.length) return;
 
+  var slideCount = originalSlides.length;
+  var beforeClones = document.createDocumentFragment();
+  var afterClones = document.createDocumentFragment();
+
+  originalSlides.forEach(function (slide, index) {
+    slide.dataset.carouselIndex = index;
+    slide.dataset.carouselSet = "original";
+
+    var beforeClone = slide.cloneNode(true);
+    beforeClone.dataset.carouselIndex = index;
+    beforeClone.dataset.carouselSet = "before";
+    beforeClone.setAttribute("aria-hidden", "true");
+    beforeClone.querySelector(".polaroid-card").tabIndex = -1;
+    beforeClones.appendChild(beforeClone);
+
+    var afterClone = slide.cloneNode(true);
+    afterClone.dataset.carouselIndex = index;
+    afterClone.dataset.carouselSet = "after";
+    afterClone.setAttribute("aria-hidden", "true");
+    afterClone.querySelector(".polaroid-card").tabIndex = -1;
+    afterClones.appendChild(afterClone);
+  });
+
+  track.insertBefore(beforeClones, track.firstChild);
+  track.appendChild(afterClones);
+
+  var slides = Array.prototype.slice.call(track.querySelectorAll(".polaroid-carousel__slide"));
+  var cards = slides.map(function (slide) { return slide.querySelector(".polaroid-card"); });
+  var originalCards = originalSlides.map(function (slide) { return slide.querySelector(".polaroid-card"); });
   var reducedMotion = window.matchMedia
     ? window.matchMedia("(prefers-reduced-motion: reduce)")
     : null;
   var currentIndex = 0;
+  var currentPhysicalIndex = slideCount;
   var autoplayEnabled = !reducedMotion || !reducedMotion.matches;
   var visible = false;
   var timer = null;
   var scrollFrame = null;
+  var scrollEndTimer = null;
   var pointer = null;
   var suppressClick = false;
 
@@ -35,7 +68,15 @@
     return Math.max(min, Math.min(max, value));
   }
 
-  function getNearestIndex() {
+  function wrapIndex(index) {
+    return ((index % slideCount) + slideCount) % slideCount;
+  }
+
+  function getSlideLeft(slide) {
+    return slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+  }
+
+  function getNearestPhysicalIndex() {
     var center = viewport.getBoundingClientRect().left + viewport.clientWidth / 2;
     var nearest = 0;
     var nearestDistance = Infinity;
@@ -52,70 +93,61 @@
     return nearest;
   }
 
-  function updateCarousel() {
-    var viewportRect = viewport.getBoundingClientRect();
-    slides.forEach(function (slide, index) {
-      var rect = slide.getBoundingClientRect();
-      var position = clamp((rect.left + rect.width / 2 - viewportRect.left) / viewportRect.width, 0, 1);
-      var cordDrop = Math.sin(position * Math.PI) * 42;
-      slide.style.setProperty("--cord-drop", cordDrop.toFixed(2) + "px");
-      cards[index].setAttribute("aria-current", index === currentIndex ? "true" : "false");
-    });
+  function getNearestPhysicalForIndex(index, fromPhysicalIndex) {
+    var logicalIndex = wrapIndex(index);
+    var candidates = [
+      logicalIndex,
+      logicalIndex + slideCount,
+      logicalIndex + slideCount * 2
+    ];
 
-    if (status) status.textContent = (currentIndex + 1) + " de " + slides.length;
-    if (previousButton) previousButton.disabled = currentIndex === 0;
-    if (nextButton) nextButton.disabled = currentIndex === slides.length - 1;
-    updateAutoplayButton();
-
-    if (dialog && dialog.open) updateLightbox();
+    return candidates.reduce(function (nearest, candidate) {
+      return Math.abs(candidate - fromPhysicalIndex) < Math.abs(nearest - fromPhysicalIndex)
+        ? candidate
+        : nearest;
+    }, candidates[0]);
   }
 
   function updateAutoplayButton() {
     if (!autoplayButton) return;
-    var atEnd = currentIndex === slides.length - 1;
-    autoplayButton.textContent = atEnd ? "Reiniciar" : autoplayEnabled ? "Pausar" : "Retomar";
+    autoplayButton.textContent = autoplayEnabled ? "Pausar" : "Retomar";
     autoplayButton.setAttribute(
       "aria-label",
-      atEnd
-        ? "Reiniciar avanço automático desde a primeira tatuagem"
-        : autoplayEnabled
-          ? "Pausar avanço automático"
-          : "Retomar avanço automático"
+      autoplayEnabled ? "Pausar avanço automático" : "Retomar avanço automático"
     );
-    autoplayButton.setAttribute("aria-pressed", autoplayEnabled && !atEnd ? "false" : "true");
-  }
-
-  function goTo(index, announce) {
-    currentIndex = clamp(index, 0, slides.length - 1);
-    if (status) status.setAttribute("aria-live", announce ? "polite" : "off");
-
-    var slide = slides[currentIndex];
-    var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
-    viewport.scrollTo({
-      left: left,
-      behavior: reducedMotion && reducedMotion.matches ? "auto" : "smooth"
-    });
-
-    updateCarousel();
-    scheduleAutoplay();
+    autoplayButton.setAttribute("aria-pressed", autoplayEnabled ? "false" : "true");
   }
 
   function updateLightbox() {
     if (!dialog || !dialogImage) return;
-    var image = slides[currentIndex].querySelector("img");
+    var image = originalSlides[currentIndex].querySelector("img");
     dialogImage.src = image.currentSrc || image.src;
     dialogImage.alt = image.alt;
-    if (dialogStatus) dialogStatus.textContent = (currentIndex + 1) + " de " + slides.length;
-    if (dialogPrevious) dialogPrevious.disabled = currentIndex === 0;
-    if (dialogNext) dialogNext.disabled = currentIndex === slides.length - 1;
+    if (dialogStatus) dialogStatus.textContent = (currentIndex + 1) + " de " + slideCount;
   }
 
-  function openLightbox(index) {
-    if (!dialog || typeof dialog.showModal !== "function") return;
-    goTo(index, true);
-    updateLightbox();
-    dialog.showModal();
-    scheduleAutoplay();
+  function updateCarousel() {
+    var viewportRect = viewport.getBoundingClientRect();
+    var positions = slides.map(function (slide) {
+      var rect = slide.getBoundingClientRect();
+      var position = clamp((rect.left + rect.width / 2 - viewportRect.left) / viewportRect.width, 0, 1);
+      return Math.sin(position * Math.PI) * 42;
+    });
+
+    slides.forEach(function (slide, index) {
+      var cordDrop = positions[index];
+      slide.style.setProperty("--cord-drop", cordDrop.toFixed(2) + "px");
+      cards[index].setAttribute(
+        "aria-current",
+        slide.dataset.carouselSet === "original" && Number(slide.dataset.carouselIndex) === currentIndex
+          ? "true"
+          : "false"
+      );
+    });
+
+    if (status) status.textContent = (currentIndex + 1) + " de " + slideCount;
+    updateAutoplayButton();
+    if (dialog && dialog.open) updateLightbox();
   }
 
   function clearAutoplay() {
@@ -138,13 +170,62 @@
     ) return;
 
     timer = window.setTimeout(function () {
-      if (currentIndex >= slides.length - 1) {
-        autoplayEnabled = false;
-        updateCarousel();
-        return;
-      }
       goTo(currentIndex + 1, false);
     }, 5600);
+  }
+
+  function goTo(index, announce) {
+    var logicalIndex = wrapIndex(index);
+    var fromPhysicalIndex = getNearestPhysicalIndex();
+    var targetPhysicalIndex = getNearestPhysicalForIndex(logicalIndex, fromPhysicalIndex);
+    var targetSlide = slides[targetPhysicalIndex];
+
+    currentIndex = logicalIndex;
+    currentPhysicalIndex = targetPhysicalIndex;
+    if (status) status.setAttribute("aria-live", announce ? "polite" : "off");
+
+    viewport.scrollTo({
+      left: getSlideLeft(targetSlide),
+      behavior: reducedMotion && reducedMotion.matches ? "auto" : "smooth"
+    });
+
+    updateCarousel();
+    scheduleAutoplay();
+  }
+
+  function settleScroll() {
+    if (pointer) return;
+
+    var nearestIndex = getNearestPhysicalIndex();
+    var nearestSlide = slides[nearestIndex];
+    currentPhysicalIndex = nearestIndex;
+    currentIndex = Number(nearestSlide.dataset.carouselIndex);
+
+    if (nearestSlide.dataset.carouselSet !== "original") {
+      var originalSlide = originalSlides[currentIndex];
+      currentPhysicalIndex = currentIndex + slideCount;
+      viewport.scrollLeft = getSlideLeft(originalSlide);
+    }
+
+    carousel.classList.remove("is-scrolling");
+    updateCarousel();
+    scheduleAutoplay();
+  }
+
+  function scheduleScrollSettle() {
+    if (scrollEndTimer !== null) window.clearTimeout(scrollEndTimer);
+    scrollEndTimer = window.setTimeout(function () {
+      scrollEndTimer = null;
+      settleScroll();
+    }, 140);
+  }
+
+  function openLightbox(index) {
+    if (!dialog || typeof dialog.showModal !== "function") return;
+    goTo(index, true);
+    updateLightbox();
+    dialog.showModal();
+    scheduleAutoplay();
   }
 
   if (previousButton) {
@@ -161,14 +242,8 @@
 
   if (autoplayButton) {
     autoplayButton.addEventListener("click", function () {
-      if (currentIndex === slides.length - 1) {
-        currentIndex = 0;
-        goTo(0, true);
-        autoplayEnabled = true;
-      } else {
-        autoplayEnabled = !autoplayEnabled;
-      }
-      updateCarousel();
+      autoplayEnabled = !autoplayEnabled;
+      updateAutoplayButton();
       scheduleAutoplay();
     });
   }
@@ -178,22 +253,36 @@
     if (event.key === "ArrowRight") targetIndex += 1;
     else if (event.key === "ArrowLeft") targetIndex -= 1;
     else if (event.key === "Home") targetIndex = 0;
-    else if (event.key === "End") targetIndex = slides.length - 1;
+    else if (event.key === "End") targetIndex = slideCount - 1;
     else return;
 
     event.preventDefault();
     goTo(targetIndex, true);
-    if (event.target.matches(".polaroid-card")) cards[currentIndex].focus();
+    if (event.target.matches(".polaroid-card")) originalCards[currentIndex].focus();
   });
 
   viewport.addEventListener("scroll", function () {
-    if (scrollFrame !== null) return;
-    scrollFrame = window.requestAnimationFrame(function () {
-      scrollFrame = null;
-      currentIndex = getNearestIndex();
-      updateCarousel();
-    });
+    carousel.classList.add("is-scrolling");
+    if (scrollFrame === null) {
+      scrollFrame = window.requestAnimationFrame(function () {
+        scrollFrame = null;
+        currentPhysicalIndex = getNearestPhysicalIndex();
+        currentIndex = Number(slides[currentPhysicalIndex].dataset.carouselIndex);
+        updateCarousel();
+      });
+    }
+    scheduleScrollSettle();
   }, { passive: true });
+
+  if ("onscrollend" in viewport) {
+    viewport.addEventListener("scrollend", function () {
+      if (scrollEndTimer !== null) {
+        window.clearTimeout(scrollEndTimer);
+        scrollEndTimer = null;
+      }
+      settleScroll();
+    });
+  }
 
   viewport.addEventListener("pointerdown", function (event) {
     if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
@@ -201,8 +290,9 @@
       id: event.pointerId,
       startX: event.clientX,
       lastX: event.clientX,
+      lastTime: performance.now(),
+      velocity: 0,
       startScroll: viewport.scrollLeft,
-      startIndex: getNearestIndex(),
       moved: false
     };
     if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
@@ -214,18 +304,28 @@
     var delta = event.clientX - pointer.startX;
     if (!pointer.moved && Math.abs(delta) < 6) return;
     pointer.moved = true;
-    carousel.classList.add("is-dragging");
+    carousel.classList.add("is-dragging", "is-scrolling");
     viewport.scrollLeft = pointer.startScroll - delta;
 
-    var swing = clamp((event.clientX - pointer.lastX) * -0.75, -16, 16);
+    var now = performance.now();
+    var elapsed = Math.max(now - pointer.lastTime, 1);
+    var velocity = (event.clientX - pointer.lastX) / elapsed;
+    pointer.velocity = pointer.velocity * 0.65 + velocity * 0.35;
+
+    var swing = clamp(pointer.velocity * -5, -12, 12);
     var viewportRect = viewport.getBoundingClientRect();
-    slides.forEach(function (slide, index) {
+    var influences = slides.map(function (slide) {
       var rect = slide.getBoundingClientRect();
       var distance = Math.abs(rect.left + rect.width / 2 - event.clientX) / viewportRect.width;
-      var influence = clamp(1 - distance, 0, 1);
-      cards[index].style.setProperty("--swing-angle", (swing * influence).toFixed(2) + "deg");
+      return clamp(1 - distance, 0, 1);
     });
+
+    cards.forEach(function (card, index) {
+      card.style.setProperty("--swing-angle", (swing * influences[index]).toFixed(2) + "deg");
+    });
+
     pointer.lastX = event.clientX;
+    pointer.lastTime = now;
     if (event.cancelable) event.preventDefault();
   });
 
@@ -239,14 +339,10 @@
     if (gesture.moved) {
       suppressClick = true;
       window.setTimeout(function () { suppressClick = false; }, 0);
-      var delta = (event ? event.clientX : gesture.lastX) - gesture.startX;
-      var threshold = slides[gesture.startIndex].offsetWidth * 0.18;
-      var target = Math.abs(delta) > threshold
-        ? gesture.startIndex + (delta < 0 ? 1 : -1)
-        : getNearestIndex();
-      goTo(target, true);
+      var nearestSlide = slides[getNearestPhysicalIndex()];
+      goTo(Number(nearestSlide.dataset.carouselIndex), true);
     } else {
-      scheduleAutoplay();
+      settleScroll();
     }
   }
 
@@ -262,7 +358,8 @@
       event.stopPropagation();
       return;
     }
-    openLightbox(cards.indexOf(card));
+    var slide = card.closest(".polaroid-carousel__slide");
+    openLightbox(Number(slide.dataset.carouselIndex));
   }, true);
 
   carousel.addEventListener("pointerenter", scheduleAutoplay);
@@ -311,6 +408,7 @@
     });
   }
 
+  viewport.scrollLeft = getSlideLeft(originalSlides[0]);
   updateCarousel();
   scheduleAutoplay();
 })();
