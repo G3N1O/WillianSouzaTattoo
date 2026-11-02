@@ -390,6 +390,17 @@ section {
   animation: heroScrollPulse 2.2s ease-in-out infinite;
 }
 
+@media (min-width: 769px) {
+  .hero-scroll-cue {
+    color: rgba(248, 249, 250, 0.88);
+  }
+
+  .hero-scroll-cue__icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
 @keyframes heroScrollPulse {
   0%,
   100% {
