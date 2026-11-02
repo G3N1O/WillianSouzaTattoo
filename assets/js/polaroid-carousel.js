@@ -286,6 +286,7 @@
 
   viewport.addEventListener("pointerdown", function (event) {
     if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+    if (event.pointerType === "touch") return;
     pointer = {
       id: event.pointerId,
       startX: event.clientX,

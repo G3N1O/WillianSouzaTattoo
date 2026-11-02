@@ -873,6 +873,14 @@ section {
   -webkit-user-select: none;
 }
 
+@media (pointer: coarse) {
+  .polaroid-carousel__viewport {
+    touch-action: auto;
+    -webkit-overflow-scrolling: touch;
+    cursor: auto;
+  }
+}
+
 .polaroid-carousel__viewport::-webkit-scrollbar {
   display: none;
 }
