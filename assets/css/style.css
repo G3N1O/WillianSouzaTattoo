@@ -197,6 +197,11 @@ section {
   margin-bottom: 1.2rem;
 }
 
+.artist-heading {
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
 /* ---------- Navbar ---------- */
 
 .navbar {
