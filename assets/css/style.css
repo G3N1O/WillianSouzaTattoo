@@ -364,6 +364,44 @@ section {
   overflow: hidden;
 }
 
+.hero-scroll-cue {
+  position: absolute;
+  z-index: 1;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  left: 50%;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: rgba(173, 181, 189, 0.72);
+  transform: translateX(-50%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-scroll-cue:focus-visible {
+  border-radius: 50%;
+  outline: 2px solid var(--c-100);
+  outline-offset: 2px;
+}
+
+.hero-scroll-cue__icon {
+  width: 24px;
+  height: 24px;
+  animation: heroScrollPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes heroScrollPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateY(-2px);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translateY(3px);
+  }
+}
+
 .hero-bg {
   position: absolute;
   inset: 0;
