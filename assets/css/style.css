@@ -1369,6 +1369,11 @@ section {
 /* ---------- Responsivo ---------- */
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: 90vh;
+    min-height: 90svh;
+  }
+
   body.nav-open .navbar {
     z-index: 1200;
   }
