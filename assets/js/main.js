@@ -210,11 +210,12 @@
       "assets/Portfolio/9.webp"
     ];
 
-    var VIEW = isTouch
+    var isCompact = isTouch || window.innerWidth <= 768;
+    var VIEW = isCompact
       ? { cols: 3, scale: 1.0, tilt: 0, turn: 0, depth: 0, parallax: 0 }
       : { cols: 5, scale: 1.18, tilt: 16, turn: -14, depth: 120, parallax: 0.6 };
 
-    var SPEED = isTouch ? 18 : 42;
+    var SPEED = isCompact ? 18 : 42;
     var VARIANCE = 0.45;
     var DIR_UP = true;
     var ROLL = 0;
@@ -485,11 +486,14 @@
     window.addEventListener("resize", function () {
       if (resizeTimer) clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function () {
-        var nextCols = isTouch ? 3 : 5;
+        var nextCompact = isTouch || window.innerWidth <= 768;
+        var nextCols = nextCompact ? 3 : 5;
         if (nextCols !== builtCols) {
-          VIEW = isTouch
+          isCompact = nextCompact;
+          VIEW = isCompact
             ? { cols: 3, scale: 1.0, tilt: 0, turn: 0, depth: 0, parallax: 0 }
             : { cols: 5, scale: 1.18, tilt: 16, turn: -14, depth: 120, parallax: 0.6 };
+          SPEED = isCompact ? 18 : 42;
         }
         build();
       }, 220);
