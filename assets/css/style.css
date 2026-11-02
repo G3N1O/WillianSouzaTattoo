@@ -875,6 +875,7 @@ section {
 
 @media (pointer: coarse) {
   .polaroid-carousel__viewport {
+    scroll-snap-type: x proximity;
     touch-action: auto;
     -webkit-overflow-scrolling: touch;
     cursor: auto;
