@@ -6,12 +6,6 @@
   if (!gallery || !dialog) return;
 
   var cards = Array.from(gallery.querySelectorAll(".circular-gallery__item"));
-  if (!cards.length) return;
-
-  var reducedMotion = window.matchMedia
-    ? window.matchMedia("(prefers-reduced-motion: reduce)")
-    : { matches: false, addListener: null, removeListener: null, addEventListener: null, removeEventListener: null };
-
   var track = gallery.querySelector(".circular-gallery__track");
   var counter = document.querySelector(".circular-gallery__status");
   var dialogImage = dialog.querySelector(".gallery-lightbox__image");
@@ -25,6 +19,7 @@
   var snapTimer = 0;
   var drag = null;
   var suppressClick = false;
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function wrapIndex(index) {
     return ((index % cards.length) + cards.length) % cards.length;
@@ -37,10 +32,7 @@
 
   function render() {
     var galleryWidth = gallery.clientWidth;
-    var firstCard = cards[0];
-    if (!firstCard) return;
-
-    var itemWidth = firstCard.offsetWidth;
+    var itemWidth = cards[0].offsetWidth;
     var radius = itemWidth * 1.65;
     var stepAngle = galleryWidth < 640 ? 34 : galleryWidth < 1024 ? 28 : 23;
     var nextActiveIndex = wrapIndex(Math.round(position));
@@ -66,6 +58,7 @@
 
     if (nextActiveIndex !== activeIndex) {
       activeIndex = nextActiveIndex;
+      // Only update counter if the element exists (page may have removed it)
       if (counter) counter.textContent = (activeIndex + 1) + " / " + cards.length;
     }
   }
@@ -73,7 +66,7 @@
   function animate() {
     if (animationFrame) return;
 
-    if (reducedMotion && reducedMotion.matches) {
+    if (reducedMotion.matches) {
       position = target;
       render();
       gallery.classList.remove("is-moving");
@@ -110,28 +103,21 @@
   }
 
   function updateDialog(index) {
-    var normalizedIndex = wrapIndex(index);
-    var card = cards[normalizedIndex];
-    if (!card || !dialogImage) return;
-
+    dialogIndex = wrapIndex(index);
+    var card = cards[dialogIndex];
     var image = card.querySelector("img");
-    if (!image) return;
-
-    dialogIndex = normalizedIndex;
     dialogImage.src = image.currentSrc || image.src;
     dialogImage.alt = image.alt;
-
+    // Update dialog counter only if present
     if (dialogCounter) dialogCounter.textContent = (dialogIndex + 1) + " / " + cards.length;
-
     target = position + shortestOffset(dialogIndex);
     animate();
   }
 
   function openDialog(index) {
-    var normalizedIndex = wrapIndex(index);
-    openerCard = cards[normalizedIndex];
-    updateDialog(normalizedIndex);
-    if (dialog && typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
+    openerCard = cards[index];
+    updateDialog(index);
+    if (!dialog.open) dialog.showModal();
   }
 
   cards.forEach(function (card, index) {
@@ -168,9 +154,7 @@
       startPosition: position,
       moved: false
     };
-    if (event.target && typeof event.target.setPointerCapture === "function") {
-      event.target.setPointerCapture(event.pointerId);
-    }
+    event.target.setPointerCapture(event.pointerId);
   });
 
   gallery.addEventListener("pointermove", function (event) {
@@ -229,7 +213,6 @@
   dialog.addEventListener("click", function (event) {
     if (event.target === dialog) dialog.close();
   });
-
   dialog.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
@@ -239,7 +222,6 @@
       updateDialog(dialogIndex + 1);
     }
   });
-
   dialog.addEventListener("close", function () {
     if (openerCard) openerCard.focus({ preventScroll: true });
   });
@@ -250,7 +232,5 @@
   } else {
     window.addEventListener("resize", render, { passive: true });
   }
-
   render();
 })();
-
