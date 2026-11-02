@@ -3,6 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var navigationEntry = window.performance &&
+        typeof window.performance.getEntriesByType === "function" &&
+        window.performance.getEntriesByType("navigation")[0];
+      var isReload = navigationEntry
+        ? navigationEntry.type === "reload"
+        : window.performance && window.performance.navigation &&
+          window.performance.navigation.type === 1;
+
+      if (!isReload) return;
+
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      if (window.location.hash) {
+        window.history.replaceState(
+          window.history.state,
+          "",
+          window.location.pathname + window.location.search
+        );
+      }
+      window.scrollTo(0, 0);
+      window.addEventListener("pageshow", function () {
+        window.scrollTo(0, 0);
+        if ("scrollRestoration" in window.history) {
+          window.requestAnimationFrame(function () {
+            window.history.scrollRestoration = "auto";
+          });
+        }
+      }, { once: true });
+    })();
+  </script>
   <title>Willian Souza — Tatuador em Cotia | Tatuagem autoral</title>
   <meta name="description" content="Tatuagem autoral em Cotia/SP. Arte exclusiva, desenhada do zero pra você, com higiene de verdade e atendimento próximo. Fale no WhatsApp.">
   <meta name="theme-color" content="#131518">
