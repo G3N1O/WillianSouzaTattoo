@@ -108,7 +108,6 @@
   /* ---------- Navbar ---------- */
 
   function closeMenu(restoreFocus) {
-    if (!navLinks || !navToggle) return;
     navLinks.classList.remove("open");
     navToggle.classList.remove("open");
     navToggle.setAttribute("aria-expanded", "false");
@@ -117,7 +116,6 @@
     if (restoreFocus) navToggle.focus();
   }
   function openMenu() {
-    if (!navLinks || !navToggle) return;
     navLinks.classList.add("open");
     navToggle.classList.add("open");
     navToggle.setAttribute("aria-expanded", "true");
@@ -173,7 +171,6 @@
   document.querySelectorAll(".acc-item").forEach(function (item) {
     var btn = item.querySelector(".acc-btn");
     var panel = item.querySelector(".acc-panel");
-    if (!btn || !panel) return;
     function open() {
       item.classList.add("open");
       btn.setAttribute("aria-expanded", "true");
@@ -186,15 +183,7 @@
     }
     btn.addEventListener("click", function () {
       var isOpen = item.classList.contains("open");
-      document.querySelectorAll(".acc-item.open").forEach(function (openItem) {
-        var openBtn = openItem.querySelector(".acc-btn");
-        var openPanel = openItem.querySelector(".acc-panel");
-        if (openBtn && openPanel) {
-          openItem.classList.remove("open");
-          openBtn.setAttribute("aria-expanded", "false");
-          openPanel.style.maxHeight = "";
-        }
-      });
+      document.querySelectorAll(".acc-item.open").forEach(close);
       if (!isOpen) open();
     });
   });
@@ -220,8 +209,6 @@
       "assets/Portfolio/8.webp",
       "assets/Portfolio/9.webp"
     ];
-
-    if (!IMAGES.length) return;
 
     var VIEW = isTouch
       ? { cols: 3, scale: 1.0, tilt: 0, turn: 0, depth: 0, parallax: 0 }
@@ -419,6 +406,8 @@
       }
     }
 
+    /* Pausa a animação quando a galeria sai da viewport. rootMargin maior para
+       pausar mais cedo e não competir com o scroll. */
     if ("IntersectionObserver" in window) {
       var wallObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -433,11 +422,14 @@
       wallObserver.observe(wall);
     }
 
+    /* Hover de coluna só em desktop */
     if (!isTouch) {
       var moveQueued = false;
       var moveX = 0;
       var moveY = 0;
 
+      /* getBoundingClientRect + elementFromPoint são caros: rodam uma vez por
+         quadro, com a última posição do ponteiro, em vez de uma por evento. */
       function runPointerMove() {
         moveQueued = false;
         var rect = wall.getBoundingClientRect();
@@ -445,8 +437,6 @@
           pointer.x = (moveX - rect.left) / rect.width - 0.5;
           pointer.y = (moveY - rect.top) / rect.height - 0.5;
         }
-
-        if (!moveX || !moveY) return;
         var hit = document.elementFromPoint(moveX, moveY);
         var tile = hit && hit.closest ? hit.closest("[data-tile-id]") : null;
         if (!tile || !wall.contains(tile)) return;
@@ -469,6 +459,7 @@
       });
     }
 
+    /* Clique = zoom sutil. Clique fora ou no mesmo = volta ao normal. */
     wall.addEventListener("click", function (e) {
       var tile = e.target.closest ? e.target.closest("[data-tile-id]") : null;
 
@@ -509,6 +500,10 @@
       else if (mq.addListener) mq.addListener(build);
     }
 
+    /* Os métodos lidos aqui (--dw-tile-h, --dw-gap e a altura do palco) vêm só de
+       CSS/viewport, então não mudam depois do load: pintar uma única vez basta.
+       Sem a guarda, o timeout de 300 ms e o evento load construíam a galeria duas
+       vezes, destruindo os tiles e reiniciando a deriva. */
     var painted = false;
     function firstPaint() {
       if (painted) return;
