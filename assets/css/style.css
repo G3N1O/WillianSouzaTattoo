@@ -1079,7 +1079,6 @@ section {
 }
 
 .polaroid-carousel__control:focus-visible,
-.polaroid-carousel__autoplay:focus-visible,
 .polaroid-lightbox__control:focus-visible,
 .polaroid-lightbox__close:focus-visible {
   outline: 2px solid var(--c-100);
@@ -1090,32 +1089,6 @@ section {
   min-width: 3.5rem;
   color: var(--c-200);
   font-variant-numeric: tabular-nums;
-  text-align: center;
-}
-
-.polaroid-carousel__autoplay {
-  min-height: 40px;
-  margin-left: 0.4rem;
-  padding: 0 0.9rem;
-  border: 1px solid rgba(173, 181, 189, 0.32);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--c-200);
-  font: inherit;
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.polaroid-carousel__autoplay:hover {
-  border-color: var(--c-100);
-  color: var(--c-100);
-}
-
-.polaroid-carousel__hint {
-  margin: 0.8rem 1rem 0;
-  color: var(--c-300);
-  font-size: 0.82rem;
   text-align: center;
 }
 
@@ -1227,7 +1200,6 @@ section {
 @media (prefers-reduced-motion: reduce) {
   .polaroid-card,
   .polaroid-carousel__control,
-  .polaroid-carousel__autoplay,
   .polaroid-lightbox__control,
   .polaroid-lightbox__close {
     transition: none;
