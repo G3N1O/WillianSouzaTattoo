@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Marca | Willian Souza | Tatuador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --abyss:#131518; --ink:#212529; --coal:#343a40; --steel:#6c757d;
+  --silver:#adb5bd; --paper:#f8f9fa; --alert:#c1121f;
+  --head:'Barlow Condensed', sans-serif; --body:'Inter', sans-serif;
+  --rail-w:64px; --maxw:1180px;
+}
+@page{ size:A4; margin:14mm 12mm 14mm 12mm; }
+@page :first{ margin:0; }
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--abyss);color:var(--paper);font-family:var(--body);font-weight:300;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+h1,h2,h3,h4,.display{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:.92;margin:0;}
+h1{font-size:clamp(3.2rem,11vw,9rem);}
+h2{font-size:clamp(2.2rem,6vw,4.6rem);}
+h3{font-size:clamp(1.3rem,2.4vw,1.85rem);letter-spacing:0;line-height:1.05;}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+
+.mono{font-family:var(--body);font-weight:400;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;}
+.silver{color:var(--silver);} .muted{color:var(--steel);} .tiny{font-size:.72rem;line-height:1.6;}
+
+.eyebrow{display:inline-flex;align-items:center;font-size:.68rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--silver);margin-bottom:1.5rem;}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
+
+.sec{padding:clamp(70px,9vw,130px) 0;position:relative;}
+.sec--light{background:var(--paper);color:var(--ink);}
+.sec--light .eyebrow{color:var(--steel);} .sec--light .silver{color:var(--coal);} .sec--light .muted{color:var(--steel);}
+.sec--ink{background:var(--ink);} .sec--edge{border-top:1px solid rgba(173,181,189,.14);}
+
+.wire{height:24px;width:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='24' viewBox='0 0 64 24'%3E%3Cg fill='none' stroke='%23adb5bd' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M0 12h64'/%3E%3Cpath d='M28 4l8 16M36 4l-8 16'/%3E%3C/g%3E%3C/svg%3E");background-repeat:repeat-x;background-size:64px 24px;opacity:.55;}
+.wire--dark{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='24' viewBox='0 0 64 24'%3E%3Cg fill='none' stroke='%236c757d' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M0 12h64'/%3E%3Cpath d='M28 4l8 16M36 4l-8 16'/%3E%3C/g%3E%3C/svg%3E");opacity:.5;}
+.wire--thin{height:24px;opacity:.3;}
+
+.rail{position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:22px 0;background:var(--abyss);border-right:1px solid rgba(173,181,189,.12);}
+.rail__mark{font-family:var(--head);font-weight:800;font-size:1.35rem;color:var(--silver);writing-mode:vertical-rl;transform:rotate(180deg);line-height:1;}
+.rail__nav{display:flex;flex-direction:column;gap:14px;}
+.rail__nav a{font-size:.62rem;font-weight:500;letter-spacing:.1em;color:var(--steel);transition:color .25s, transform .25s;display:block;}
+.rail__nav a:hover{color:var(--silver);transform:translateX(2px);}
+.rail__meta{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--steel);writing-mode:vertical-rl;transform:rotate(180deg);}
+@media(max-width:860px){:root{--rail-w:0px;}.rail{display:none;}main{margin-left:0;}}
+
+.cover{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(28px,5vw,56px) 0 clamp(24px,4vw,40px);position:relative;overflow:hidden;}
+.cover__grid{position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:linear-gradient(rgba(173,181,189,.06) 1px, transparent 1px),linear-gradient(90deg, rgba(173,181,189,.06) 1px, transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);}
+.cover__top{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;z-index:2;}
+.cover__title{position:relative;z-index:2;}
+.cover__title h1{font-size:clamp(3.4rem,15vw,13rem);line-height:.82;letter-spacing:-.03em;}
+.cover__title h1 em{font-style:italic;font-weight:600;color:var(--steel);}
+.cover__bottom{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px;position:relative;z-index:2;}
+.metablock{border-top:1px solid rgba(173,181,189,.22);padding-top:12px;}
+.metablock dt{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--steel);margin-bottom:5px;}
+.metablock dd{margin:0;font-family:var(--head);font-size:1.15rem;text-transform:uppercase;letter-spacing:.01em;color:var(--silver);}
+
+.chapter-head{display:flex;align-items:flex-start;gap:clamp(18px,4vw,52px);margin-bottom:clamp(36px,5vw,66px);}
+.chapter-num{font-family:var(--head);font-weight:800;font-size:clamp(3.5rem,9vw,7rem);line-height:.78;color:transparent;-webkit-text-stroke:1.4px var(--steel);flex:none;}
+.sec--light .chapter-num{-webkit-text-stroke:1.4px var(--silver);}
+.chapter-head__txt{flex:1;min-width:0;padding-top:6px;}
+.chapter-head__txt p{max-width:56ch;margin-top:16px;color:var(--silver);}
+.sec--light .chapter-head__txt p{color:var(--coal);}
+
+.grid{display:grid;gap:20px;}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(26px,5vw,64px);align-items:center;}
+@media(max-width:840px){.split{grid-template-columns:1fr;}}
+
+.card{border:1px solid rgba(173,181,189,.18);padding:26px 24px;background:rgba(33,37,41,.4);}
+.sec--light .card{border-color:rgba(52,58,64,.16);background:#fff;}
+.card h3{margin-bottom:12px;} .card p{font-size:.9rem;color:var(--silver);} .sec--light .card p{color:var(--coal);}
+.card__num{font-family:var(--head);font-weight:700;font-size:1rem;letter-spacing:.14em;color:var(--steel);display:block;margin-bottom:16px;}
+
+.spec{position:relative;border:1px dashed rgba(173,181,189,.4);display:flex;align-items:center;justify-content:center;padding:34px 26px;min-height:150px;background:rgba(19,21,24,.35);}
+.sec--light .spec{border-color:rgba(52,58,64,.3);background:rgba(255,255,255,.6);}
+.spec__label{position:absolute;left:0;bottom:-1px;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);background:var(--abyss);padding:3px 8px;transform:translateY(50%);}
+.sec--light .spec__label{background:var(--paper);}
+.spec__label--top{top:-1px;bottom:auto;transform:translateY(-50%);}
+
+.img-logo{max-width:100%;max-height:180px;object-fit:contain;}
+.img-foto{width:100%;height:100%;object-fit:cover;}
+
+.logolock{font-family:var(--head);font-weight:700;text-transform:uppercase;line-height:1;text-align:center;}
+.logolock__name{font-size:clamp(1.6rem,4.4vw,2.9rem);letter-spacing:.02em;display:block;}
+.logolock__sub{display:block;margin-top:.5em;font-size:.62em;font-weight:500;letter-spacing:.42em;color:var(--silver);}
+.logolock--ink .logolock__sub{color:var(--coal);}
+.logolock--mono .logolock__name, .logolock--mono .logolock__sub{color:#fff;}
+
+.palette-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+@media(max-width: 900px) { .palette-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(max-width: 600px) { .palette-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.swatch{display: flex; flex-direction: column; border: 1px solid rgba(52,58,64,.16); background: #fff;}
+.swatch__chip{height:60px;position:relative;}
+.swatch__chip span{position:absolute;right:6px;bottom:4px;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;}
+.swatch__info{padding: 12px; display: flex; flex-direction: column; flex-grow: 1; text-align: left;}
+.swatch__info strong{font-family:var(--head); font-size:1.1rem; text-transform:uppercase; letter-spacing:.02em; display:block; color:var(--ink); margin-bottom:8px;}
+.swatch__info dl{margin:0; display:grid; grid-template-columns: 32px 1fr; gap:4px 8px; align-items: baseline;}
+.swatch__info dt{font-size:.55rem; letter-spacing:.05em; color:var(--steel); font-weight:500; text-align: left; margin:0;}
+.swatch__info dd{margin:0; font-size:.65rem; font-weight:500; color:var(--coal); font-variant-numeric:tabular-nums; line-height: 1.4; text-align: left;}
+.swatch__use {margin-top: auto; padding-top: 10px; border-top: 1px dashed rgba(52,58,64,.15); font-size: .58rem; color: var(--steel); line-height: 1.3; text-align: left;}
+.swatch__use strong {font-family: var(--body); font-weight: 600; color: var(--coal); letter-spacing: .05em; text-transform: uppercase; font-size: .5rem; display: block; margin-bottom: 2px;}
+
+.specimen{border:1px solid rgba(173,181,189,.16);padding:clamp(22px,3.4vw,40px);display:flex;flex-direction:column;gap:18px;}
+.specimen__aa{font-size:clamp(5rem,15vw,11rem);line-height:.78;letter-spacing:-.04em;}
+.specimen--head .specimen__aa{font-family:var(--head);font-weight:700;text-transform:uppercase;}
+.specimen--body .specimen__aa{font-family:var(--body);font-weight:300;}
+.specimen__glyphs{font-size:clamp(.7rem,1.7vw,1rem);letter-spacing:.06em;color:var(--steel);word-break:break-word;}
+.typescale{border-top:1px solid rgba(173,181,189,.16);}
+.typescale__row{display:grid;grid-template-columns:70px 1fr auto;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(173,181,189,.12);}
+.typescale__row span:first-child{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);}
+.typescale__row span:last-child{font-size:.68rem;color:var(--steel);font-variant-numeric:tabular-nums;}
+
+.wrong{position:relative;border:1px solid rgba(173,181,189,.16);padding:30px 16px 40px;display:flex;align-items:center;justify-content:center;min-height:150px;overflow:hidden;background:rgba(19,21,24,.3);}
+.sec--light .wrong{background:rgba(255,255,255,.5);border-color:rgba(52,58,64,.16);}
+.wrong__badge{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;background:var(--alert);color:#fff;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;}
+.wrong figcaption{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);}
+
+.mock{border:1px solid rgba(173,181,189,.18);background:rgba(33,37,41,.35);padding:26px;display:flex;flex-direction:column;gap:18px;align-items:center;}
+.mock__stage{width:100%;display:flex;align-items:center;justify-content:center;}
+.bizcard{width:100%;max-width:300px;aspect-ratio:85/48;border-radius:3px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 18px 40px -18px rgba(0,0,0,.85);}
+.bizcard--front{background:var(--paper);color:var(--ink);}
+.bizcard--back{background:var(--abyss);color:var(--paper);border:1px solid rgba(173,181,189,.22);}
+.bizcard__contact{font-size:.55rem;line-height:1.9;letter-spacing:.06em;color:var(--steel);}
+.post{width:100%;max-width:260px;aspect-ratio:1/1;background:var(--abyss);border:1px solid rgba(173,181,189,.2);display:flex;flex-direction:column;justify-content:space-between;padding:20px;}
+.post--story{aspect-ratio:9/16;max-width:190px;}
+.post__tag{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--steel);}
+.post__line{font-family:var(--head);font-size:1.6rem;line-height:.95;text-transform:uppercase;}
+
+.seal{width:130px;height:130px;border-radius:50%;border:1px solid var(--silver);display:flex;align-items:center;justify-content:center;position:relative;flex:none;}
+.seal__inner{width:96px;height:96px;border-radius:50%;border:1px dashed rgba(173,181,189,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--head);text-transform:uppercase;font-size:.72rem;letter-spacing:.1em;line-height:1.15;color:var(--silver);}
+.seal__inner small{font-size:.5rem;letter-spacing:.22em;color:var(--steel);margin-top:5px;}
+
+.voice{border-top:1px solid rgba(52,58,64,.18);padding-top:22px;}
+.voice h4{font-family:var(--head);font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;color:var(--ink);}
+.voice ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+.voice li{font-size:.88rem;line-height:1.6;padding-left:20px;position:relative;color:var(--coal);}
+.voice li::before{content:'';position:absolute;left:0;top:.62em;width:8px;height:1px;background:var(--steel);}
+.voice--no li::before{background:var(--alert);}
+.voice--no li{color:var(--steel);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:rgba(193,18,31,.5);}
+
+.check{list-style:none;margin:0;padding:0;display:grid;gap:0;}
+.check li{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(173,181,189,.14);font-size:.86rem;color:var(--silver);}
+.sec--light .check li{border-color:rgba(52,58,64,.14);color:var(--coal);}
+.check li::before{content:'';flex:none;width:13px;height:13px;margin-top:5px;border:1px solid var(--steel);}
+
+.foot{background:var(--ink);border-top:1px solid rgba(173,181,189,.14);padding:clamp(48px,6vw,80px) 0 40px;}
+.foot__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:28px;}
+.foot h4{font-family:var(--head);font-size:.95rem;text-transform:uppercase;letter-spacing:.16em;color:var(--steel);margin-bottom:12px;}
+.foot a{color:var(--silver);font-size:.86rem;display:inline-block;padding:3px 0;transition:color .2s;}
+.foot a:hover{color:var(--paper);}
+.foot__bar{margin-top:44px;padding-top:22px;border-top:1px solid rgba(173,181,189,.14);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);}
+
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+.rv.is-in{opacity:1;transform:none;}
+
+@media print{
+  @page{ size:A4; margin:14mm 12mm 14mm 12mm; }
+  @page :first{ margin:0; }
+  html,body{background:#fff !important;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body::after,.rail,.cover__grid{display:none !important;}
+  main{margin-left:0 !important;}
+  .sec{padding:14mm 0;page-break-inside:avoid;}
+  .sec--light{background:var(--paper) !important;color:var(--ink) !important;}
+  .sec--ink{background:var(--ink) !important;color:var(--paper) !important;}
+  .sec--edge{border-top:1px solid rgba(173,181,189,.25);}
+  body > main > section.sec:not(.sec--light):not(.sec--ink){background:var(--abyss) !important;}
+  .cover{min-height:auto;height:297mm;padding:22mm 18mm 16mm;page-break-after:always;background:var(--abyss) !important;margin:-14mm -12mm 0 -12mm;}
+  #sumario,#manifesto,#logotipo,#cores,#tipografia,#grafismos,#imagem,#voz,#aplicacoes,#checklist{page-break-before:always;}
+  .rv{opacity:1 !important;transform:none !important;}
+  .chapter-head,.card,.spec,.swatch,.specimen,.wrong,.mock,.bizcard,.post,.seal,.split{page-break-inside:avoid;}
+  h2,h3{page-break-after:avoid;}
+  a[href]::after{content:'' !important;}
+  .foot{background:var(--ink) !important;color:var(--paper) !important;page-break-before:always;}
+}
+</style>
+</head>
+<body>
+
+<aside class="rail" aria-label="Navegação do manual">
+  <span class="rail__mark">WS</span>
+  <nav class="rail__nav">
+    <a href="#capa">00</a>
+    <a href="#sumario">.</a>
+    <a href="#manifesto">01</a>
+    <a href="#logotipo">02</a>
+    <a href="#cores">03</a>
+    <a href="#tipografia">04</a>
+    <a href="#grafismos">05</a>
+    <a href="#imagem">06</a>
+    <a href="#voz">07</a>
+    <a href="#aplicacoes">08</a>
+    <a href="#checklist">09</a>
+  </nav>
+  <span class="rail__meta">v2.0 · 2026</span>
+</aside>
+
+<main>
+
+<!-- CAPA -->
+<section class="cover" id="capa">
+  <div class="cover__grid" aria-hidden="true"></div>
+  <div class="wrap cover__top">
+    <div>
+      <p class="mono silver">Manual de Identidade Visual</p>
+      <p class="mono muted" style="margin-top:6px;">Cotia · São Paulo · Brasil</p>
+    </div>
+    <div style="text-align:right;">
+      <p class="mono silver">Willian Souza</p>
+      <p class="mono muted" style="margin-top:6px;">Artista &amp; Tatuador</p>
+    </div>
+  </div>
+  <div class="wrap cover__title">
+    <h1>Manual<br>de <em>Marca</em></h1>
+    <p style="max-width:44ch;margin-top:28px;color:var(--silver);font-size:1rem;">
+      O documento que define como a marca Willian Souza aparece, fala e se comporta. Do traço no papel ao traço na pele.
+    </p>
+  </div>
+  <div class="wrap">
+    <div class="wire wire--thin" aria-hidden="true" style="margin-bottom:26px;"></div>
+    <div class="cover__bottom">
+      <dl class="metablock"><dt>Versão</dt><dd>2.0</dd></dl>
+      <dl class="metablock"><dt>Edição</dt><dd>2026</dd></dl>
+      <dl class="metablock"><dt>Responsável</dt><dd>Willian Souza</dd></dl>
+      <dl class="metablock"><dt>Uso</dt><dd>Interno &amp; Parceiros</dd></dl>
+    </div>
+  </div>
+</section>
+
+<!-- SUMÁRIO -->
+<section class="sec sec--ink sec--edge" id="sumario">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">.</span>
+      <div class="chapter-head__txt">
+        <h2>Sumário</h2>
+        <p>Nove capítulos. Nenhuma regra sem motivo.</p>
+      </div>
+    </div>
+    <div class="typescale rv">
+      <div class="typescale__row"><span>01</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Manifesto &amp; Essência</span><span>03</span></div>
+      <div class="typescale__row"><span>02</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Logotipo &amp; Símbolo</span><span>05</span></div>
+      <div class="typescale__row"><span>03</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Paleta de Cores</span><span>07</span></div>
+      <div class="typescale__row"><span>04</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Sistema Tipográfico</span><span>08</span></div>
+      <div class="typescale__row"><span>05</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Grafismos &amp; Textura</span><span>10</span></div>
+      <div class="typescale__row"><span>06</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Direção de Imagem</span><span>11</span></div>
+      <div class="typescale__row"><span>07</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Tom de Voz</span><span>12</span></div>
+      <div class="typescale__row"><span>08</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Aplicações</span><span>13</span></div>
+      <div class="typescale__row" style="border-bottom:none;"><span>09</span><span style="font-family:var(--head);font-size:1.5rem;text-transform:uppercase;">Checklist &amp; Contatos</span><span>15</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="sec sec--light" id="manifesto">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">01</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Manifesto &amp; Essência</span>
+        <h2>A pele guarda o que<br>a memória <span class="silver">não deixa apagar.</span></h2>
+        <p>Willian Souza não aplica desenhos. Ele constrói peças. Primeiro escuta, depois desenha, e só então trabalha na pele. Cada tatuagem sai do zero, respeitando a anatomia do corpo e o peso da história de quem senta na cadeira.</p>
+      </div>
+    </div>
+    <div class="wire wire--dark" aria-hidden="true" style="margin-bottom:clamp(40px,5vw,64px);"></div>
+    <div class="grid g4 rv">
+      <article class="card"><span class="card__num">01</span><h3>Autoral</h3><p>Nenhum desenho se repete. A referência inspira; a peça final é única.</p></article>
+      <article class="card"><span class="card__num">02</span><h3>Próximo</h3><p>Do primeiro “oi” no WhatsApp até a cicatrização. Sem robô, sem frieza.</p></article>
+      <article class="card"><span class="card__num">03</span><h3>Preciso</h3><p>Traço, escala e contraste pensados para envelhecer bem na pele.</p></article>
+      <article class="card"><span class="card__num">04</span><h3>Seguro</h3><p>Higiene de verdade, material descartável e valor fechado antes do agendamento.</p></article>
+    </div>
+    <div class="split" style="margin-top:clamp(48px,6vw,90px);">
+      <div class="rv">
+        <span class="eyebrow">Posicionamento</span>
+        <h3 style="font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.02;text-transform:uppercase;">Tatuagem autoral em Cotia:<br>arte exclusiva, higiene de verdade.</h3>
+      </div>
+      <div class="rv">
+        <p style="color:var(--coal);">A marca ocupa um lugar claro: não é um estúdio de catálogo, nem um “tatuador barato”. É o artista que desenha o que tatua.</p>
+        <div class="wire wire--dark wire--thin" aria-hidden="true" style="margin-top:26px;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOTIPO -->
+<section class="sec" id="logotipo">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">02</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Logotipo &amp; Símbolo</span>
+        <h2>O nome é a assinatura.</h2>
+        <p>O logotipo principal é o avatar ilustrado, que carrega a identidade única do artista. Ao lado, a tipografia oficial Willian Souza.</p>
+      </div>
+    </div>
+
+    <div class="spec rv" style="min-height:clamp(280px,35vw,400px); padding: 40px;">
+      <span class="spec__label">Lockup principal · Símbolo + Tipografia</span>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap;">
+        <img src="assets/Logo/LOGO.png" alt="Logo Willian Souza" class="img-logo" style="max-width: 220px; border-radius: 8px; background: var(--coal);">
+        <div class="logolock">
+          <span class="logolock__name">Willian Souza</span>
+          <span class="logolock__sub">| Tatuador</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="rv" style="margin:clamp(48px,6vw,80px) 0 22px;font-size:1.1rem;letter-spacing:.14em;">Variações autorizadas</h3>
+    <div class="grid g4 rv">
+      <div class="spec" style="background:var(--paper);">
+        <span class="spec__label spec__label--top">01 · Positivo</span>
+        <div class="logolock logolock--ink"><span class="logolock__name" style="color:var(--ink);">Willian Souza</span><span class="logolock__sub">| Tatuador</span></div>
+      </div>
+      <div class="spec" style="background:var(--abyss);">
+        <span class="spec__label spec__label--top">02 · Negativo</span>
+        <div class="logolock"><span class="logolock__name" style="color:var(--paper);">Willian Souza</span><span class="logolock__sub">| Tatuador</span></div>
+      </div>
+      <div class="spec" style="background:var(--coal);">
+        <span class="spec__label spec__label--top">03 · Monocromático</span>
+        <div class="logolock logolock--mono"><span class="logolock__name">Willian Souza</span><span class="logolock__sub">| Tatuador</span></div>
+      </div>
+      <div class="spec">
+        <span class="spec__label spec__label--top">04 · Símbolo isolado</span>
+        <img src="assets/Logo/LOGO.png" alt="Símbolo Willian Souza" style="max-height: 80px; object-fit: contain;">
+      </div>
+    </div>
+
+    <div class="split" style="margin-top:clamp(48px,6vw,80px);">
+      <div class="rv">
+        <span class="eyebrow">Área de respiro</span>
+        <p style="color:var(--silver);margin-bottom:26px;">A margem mínima de proteção equivale à altura da letra <strong>W</strong>, aplicada nos quatro lados.</p>
+        <div class="spec" style="padding:64px 44px;">
+          <span class="spec__label spec__label--top">Margem = altura do “W”</span>
+          <span class="spec__label">Área de não-interferência</span>
+          <div class="logolock"><span class="logolock__name" style="font-size:2rem;">Willian Souza</span><span class="logolock__sub">| Tatuador</span></div>
+        </div>
+      </div>
+      <div class="rv">
+        <span class="eyebrow">Tamanho mínimo</span>
+        <p style="color:var(--silver);margin-bottom:26px;">Para garantir legibilidade, respeite os mínimos abaixo.</p>
+        <div class="grid g2">
+          <div class="spec" style="min-height:120px;">
+            <span class="spec__label">Impresso · 30 mm</span>
+            <div class="logolock"><span class="logolock__name" style="font-size:1.05rem;">Willian Souza</span></div>
+          </div>
+          <div class="spec" style="min-height:120px;">
+            <span class="spec__label">Digital · 140 px</span>
+            <div class="logolock"><span class="logolock__name" style="font-size:1.05rem;">Willian Souza</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="rv" style="margin:clamp(56px,7vw,90px) 0 22px;font-size:1.1rem;letter-spacing:.14em;">Usos incorretos</h3>
+    <div class="grid g3 rv">
+      <figure class="wrong"><span class="wrong__badge">✕</span><div class="logolock" style="transform:scaleX(1.6);"><span class="logolock__name" style="font-size:1.1rem;">Willian Souza</span></div><figcaption>Não distorcer</figcaption></figure>
+      <figure class="wrong"><span class="wrong__badge">✕</span><div class="logolock" style="transform:rotate(-14deg);"><span class="logolock__name" style="font-size:1.1rem;">Willian Souza</span></div><figcaption>Não rotacionar</figcaption></figure>
+      <figure class="wrong"><span class="wrong__badge">✕</span><div class="logolock"><span class="logolock__name" style="font-size:1.1rem;color:#7a1f2b;">Willian Souza</span></div><figcaption>Não alterar a cor</figcaption></figure>
+      <figure class="wrong"><span class="wrong__badge">✕</span><div class="logolock"><span class="logolock__name" style="font-size:1.1rem;color:transparent;-webkit-text-stroke:1px var(--silver);">Willian Souza</span></div><figcaption>Não aplicar contorno</figcaption></figure>
+      <figure class="wrong"><span class="wrong__badge">✕</span><div class="logolock"><span class="logolock__name" style="font-size:1.1rem;text-shadow:3px 3px 0 var(--steel);">Willian Souza</span></div><figcaption>Não usar sombra</figcaption></figure>
+      <figure class="wrong" style="background:var(--coal);"><span class="wrong__badge">✕</span><div class="logolock"><span class="logolock__name" style="font-size:1.1rem;color:var(--steel);">Willian Souza</span></div><figcaption>Não usar sobre baixo contraste</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CORES -->
+<section class="sec sec--light" id="cores">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">03</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Paleta de Cores</span>
+        <h2>Preto, cinza<br>e <span class="silver">nada mais.</span></h2>
+        <p>A marca é monocromática por decisão. A escala de cinzas frios traduz o universo do blackwork e do traço fino.</p>
+      </div>
+    </div>
+    
+    <div class="palette-grid rv">
+      <article class="swatch">
+        <div class="swatch__chip" style="background:#131518;"><span style="color:#adb5bd;">Base</span></div>
+        <div class="swatch__info">
+          <strong>Abyss</strong>
+          <dl>
+            <dt>HEX</dt><dd>#131518</dd>
+            <dt>RGB</dt><dd>19 · 21 · 24</dd>
+            <dt>CMYK</dt><dd>80 · 75 · 68 · 78</dd>
+          </dl>
+          <div class="swatch__use">
+            <strong>Uso</strong>
+            Fundo principal, capa
+          </div>
+        </div>
+      </article>
+
+      <article class="swatch">
+        <div class="swatch__chip" style="background:#212529;"><span style="color:#adb5bd;">Superfície</span></div>
+        <div class="swatch__info">
+          <strong>Ink</strong>
+          <dl>
+            <dt>HEX</dt><dd>#212529</dd>
+            <dt>RGB</dt><dd>33 · 37 · 41</dd>
+            <dt>CMYK</dt><dd>78 · 72 · 67 · 68</dd>
+          </dl>
+          <div class="swatch__use">
+            <strong>Uso</strong>
+            Seções, cards
+          </div>
+        </div>
+      </article>
+
+      <article class="swatch">
+        <div class="swatch__chip" style="background:#343a40;"><span style="color:#adb5bd;">Apoio</span></div>
+        <div class="swatch__info">
+          <strong>Coal</strong>
+          <dl>
+            <dt>HEX</dt><dd>#343A40</dd>
+            <dt>RGB</dt><dd>52 · 58 · 64</dd>
+            <dt>CMYK</dt><dd>72 · 62 · 55 · 45</dd>
+          </dl>
+          <div class="swatch__use">
+            <strong>Uso</strong>
+            Blocos de destaque
+          </div>
+        </div>
+      </article>
+
+      <article class="swatch">
+        <div class="swatch__chip" style="background:#6c757d;"><span style="color:#131518;">Texto sutil</span></div>
+        <div class="swatch__info">
+          <strong>Steel</strong>
+          <dl>
+            <dt>HEX</dt><dd>#6C757D</dd>
+            <dt>RGB</dt><dd>108 · 117 · 125</dd>
+            <dt>CMYK</dt><dd>55 · 43 · 36 · 12</dd>
+          </dl>
+          <div class="swatch__use">
+            <strong>Uso</strong>
+            Legendas, bordas
+          </div>
+        </div>
+      </article>
+
+      <article class="swatch">
+        <div class="swatch__chip" style="background:#adb5bd;"><span style="color:#131518;">Assinatura</span></div>
+        <div class="swatch__info">
+          <strong>Silver</strong>
+          <dl>
+            <dt>HEX</dt><dd>#ADB5BD</dd>
+            <dt>RGB</dt><dd>173 · 181 · 189</dd>
+            <dt>CMYK</dt><dd>32 · 22 · 18 · 2</dd>
+          </dl>
+          <div class="swatch__use">
+            <strong>Uso</strong>
+            Texto de apoio
+          </div>
+        </div>
+      </article>
+
+      <article class="swatch">
+        <div class="swatch__chip" style="background:#f8f9fa;border-bottom:1px solid rgba(52,58,64,.12);"><span style="color:#6c757d;">Clareza</span></div>
+        <div class="swatch__info">
+          <strong>Paper</strong>
+          <dl>
+            <dt>HEX</dt><dd>#F8F9FA</dd>
+            <dt>RGB</dt><dd>248 · 249 · 250</dd>
+            <dt>CMYK</dt><dd>1 · 1 · 0 · 0</dd>
+          </dl>
+          <div class="swatch__use">
+            <strong>Uso</strong>
+            Fundos claros
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="split" style="margin-top:clamp(48px,6vw,80px);">
+      <div class="rv">
+        <span class="eyebrow">Cor funcional</span>
+        <p style="color:var(--coal);max-width:52ch;">O vermelho <strong>#C1121F</strong> não faz parte da identidade. Ele existe apenas para sinalizar erro e “não faça isso”.</p>
+      </div>
+      <div class="rv">
+        <div class="swatch" style="border-color:rgba(193,18,31,.3); max-width: 250px;">
+          <div class="swatch__chip" style="background:#c1121f;height:60px;"><span style="color:#fff;">Alerta</span></div>
+          <div class="swatch__info">
+            <strong style="color:var(--alert);">Alert</strong>
+            <dl>
+              <dt>HEX</dt><dd>#C1121F</dd>
+              <dt>RGB</dt><dd>193 · 18 · 31</dd>
+              <dt>CMYK</dt><dd>16 · 100 · 100 · 5</dd>
+            </dl>
+            <div class="swatch__use">
+              <strong>Uso</strong>
+              Erro, aviso
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOGRAFIA -->
+<section class="sec" id="tipografia">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">04</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Sistema Tipográfico</span>
+        <h2>Duas fontes.<br>Zero dúvida.</h2>
+        <p>Uma condensada para impacto. Uma neutra para leitura. Ambas gratuitas no Google Fonts.</p>
+      </div>
+    </div>
+    <div class="grid g2 rv">
+      <div class="specimen specimen--head"><p class="mono silver">Display · Títulos</p><span class="specimen__aa">Aa</span><div><strong style="font-family:var(--head);font-size:1.4rem;text-transform:uppercase;">Barlow Condensed</strong><p class="mono muted" style="margin-top:6px;">Pesos 500 · 600 · 700 · 800</p></div><p class="specimen__glyphs">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z<br>0 1 2 3 4 5 6 7 8 9 · @ # % &amp;</p></div>
+      <div class="specimen specimen--body"><p class="mono silver">Texto · Leitura</p><span class="specimen__aa">Aa</span><div><strong style="font-family:var(--body);font-size:1.4rem;font-weight:500;">Inter</strong><p class="mono muted" style="margin-top:6px;">Pesos 300 · 400 · 500 · 600</p></div><p class="specimen__glyphs">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z<br>0 1 2 3 4 5 6 7 8 9 · @ # % &amp;</p></div>
+    </div>
+    <h3 class="rv" style="margin:clamp(48px,6vw,80px) 0 22px;font-size:1.1rem;letter-spacing:.14em;">Escala e hierarquia</h3>
+    <div class="typescale rv">
+      <div class="typescale__row"><span>H1</span><span style="font-family:var(--head);font-size:clamp(2rem,5vw,3.4rem);text-transform:uppercase;">Sua história, gravada na pele</span><span>Barlow 700</span></div>
+      <div class="typescale__row"><span>H2</span><span style="font-family:var(--head);font-size:clamp(1.5rem,3.4vw,2.3rem);text-transform:uppercase;">Arte autoral em Cotia</span><span>Barlow 700</span></div>
+      <div class="typescale__row"><span>H3</span><span style="font-family:var(--head);font-size:1.4rem;text-transform:uppercase;">Da ideia à pele</span><span>Barlow 600</span></div>
+      <div class="typescale__row"><span>Corpo</span><span style="font-size:1rem;color:var(--silver);">Primeiro escuta, depois desenha, e só então tatua.</span><span>Inter 300</span></div>
+      <div class="typescale__row"><span>Apoio</span><span style="font-size:.88rem;color:var(--silver);">Chame no WhatsApp com a referência.</span><span>Inter 400</span></div>
+      <div class="typescale__row" style="border-bottom:none;"><span>Legenda</span><span class="mono muted">Cotia · SP · Desde 2018</span><span>Inter 500 · +18%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAFISMOS -->
+<section class="sec sec--ink sec--edge" id="grafismos">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">05</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Grafismos &amp; Textura</span>
+        <h2>O fio que<br>costura tudo.</h2>
+        <p>O arame farpado é o elemento gráfico oficial. Sempre discreto, sempre em linha.</p>
+      </div>
+    </div>
+    <div class="spec rv" style="min-height:auto;padding:44px 30px;flex-direction:column;gap:34px;align-items:stretch;">
+      <span class="spec__label spec__label--top">Elemento 01 · Arame farpado</span>
+      <div><p class="mono muted" style="margin-bottom:12px;">Espessura cheia · divisor</p><div class="wire" aria-hidden="true"></div></div>
+      <div><p class="mono muted" style="margin-bottom:12px;">Espessura reduzida · textura</p><div class="wire wire--thin" aria-hidden="true"></div></div>
+    </div>
+    <div class="grid g3 rv" style="margin-top:26px;">
+      <div class="spec" style="flex-direction:column;gap:16px;"><span class="spec__label">Elemento 02 · Grade</span><div style="width:100%;height:110px;background-image:linear-gradient(rgba(173,181,189,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(173,181,189,.22) 1px,transparent 1px);background-size:22px 22px;"></div><p class="tiny muted" style="text-align:center;">Grade de 8pt</p></div>
+      <div class="spec" style="flex-direction:column;gap:16px;"><span class="spec__label">Elemento 03 · Grão</span><div style="width:100%;height:110px;background-color:var(--coal);background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E&quot;);"></div><p class="tiny muted" style="text-align:center;">Textura sutil</p></div>
+      <div class="spec" style="flex-direction:column;gap:16px;"><span class="spec__label">Elemento 04 · Selo</span><div class="seal"><div class="seal__inner">Willian<br>Souza<small>Cotia · SP</small></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIREÇÃO DE IMAGEM -->
+<section class="sec" id="imagem">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">06</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Direção de Imagem</span>
+        <h2>Duas linguagens,<br>um só universo.</h2>
+        <p>Fotografia real do trabalho e ilustração autoral. Elas se dividem por contexto.</p>
+      </div>
+    </div>
+
+    <div class="grid g2 rv">
+      <figure class="spec" style="flex-direction:column;gap:0;padding:0;min-height:0;overflow:hidden;">
+        <span class="spec__label spec__label--top">Fotografia · Trabalho real</span>
+        <div style="width:100%;aspect-ratio:4/3;background:var(--coal);">
+          <img src="assets/Artista/SaveClip.App_589164497_18542110912026416_5207490521414100792_n.jpg" alt="Willian Souza tatuando" class="img-foto">
+        </div>
+        <figcaption style="padding:20px 24px 26px;">
+          <h3 style="font-size:1.05rem;letter-spacing:.04em;">Fotografia</h3>
+          <p class="tiny muted" style="margin-top:8px;">Luz natural ou difusa, sem filtro pesado. Enquadramento próximo, mãos e agulha em cena. A pele é o assunto.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="spec" style="flex-direction:column;gap:0;padding:0;min-height:0;overflow:hidden;">
+        <span class="spec__label spec__label--top">Ilustração · Avatar oficial</span>
+        <div style="width:100%;aspect-ratio:4/3;background:var(--coal);">
+          <img src="assets/Logo/LOGO.png" alt="Avatar ilustrado Willian Souza" class="img-foto" style="object-fit: contain; padding: 20px;">
+        </div>
+        <figcaption style="padding:20px 24px 26px;">
+          <h3 style="font-size:1.05rem;letter-spacing:.04em;">Ilustração</h3>
+          <p class="tiny muted" style="margin-top:8px;">Traço limpo, paleta contida. Usada em avatar de perfil, selos e materiais de apresentação.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- TOM DE VOZ -->
+<section class="sec sec--light" id="voz">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">07</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Tom de Voz</span>
+        <h2>Fala como<br>gente, não como <span class="silver">anúncio.</span></h2>
+        <p>A marca fala na primeira pessoa, direto com quem está do outro lado.</p>
+      </div>
+    </div>
+    <div class="grid g2 rv">
+      <div class="voice"><h4>Falamos assim</h4><ul><li>“Manda a ideia. Eu devolvo um desenho que é só seu.”</li><li>“O valor é fechado antes do agendamento, sem surpresa.”</li><li>“Você sai com orientação completa de cicatrização.”</li><li>“A arte final é sempre desenhada do zero.”</li><li>Frases curtas. Primeira pessoa. Verbo no presente.</li></ul></div>
+      <div class="voice voice--no"><h4>Não falamos assim</h4><ul><li>“Promoção imperdível! Só hoje!”</li><li>“O melhor tatuador de Cotia e região.”</li><li>“Utilizamos pigmentos de alta performance.”</li><li>“AGENDE JÁ!!! VAGAS LIMITADAS!!!”</li><li>Texto em caixa alta gritada, emoji em excesso.</li></ul></div>
+    </div>
+    <div class="wire wire--dark wire--thin rv" aria-hidden="true" style="margin:clamp(44px,5vw,70px) 0;"></div>
+    <div class="grid g3 rv">
+      <article class="card"><h3 style="font-size:1rem;letter-spacing:.06em;">Direto</h3><p>Uma ideia por frase. Se dá pra cortar uma palavra sem perder sentido, corte.</p></article>
+      <article class="card"><h3 style="font-size:1rem;letter-spacing:.06em;">Próximo</h3><p>Trate por “você”. Fale como quem já conhece.</p></article>
+      <article class="card"><h3 style="font-size:1rem;letter-spacing:.06em;">Concreto</h3><p>Prefira “entrego o desenho em 3 dias” a “atendimento ágil e personalizado”.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- APLICAÇÕES -->
+<section class="sec" id="aplicacoes">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">08</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Aplicações</span>
+        <h2>A marca<br>na rua.</h2>
+        <p>Exemplos de como o sistema se comporta nos pontos de contato reais.</p>
+      </div>
+    </div>
+    <div class="grid g3 rv">
+      <div class="mock"><p class="mono silver">Cartão de visita · 85 × 48 mm</p><div class="mock__stage" style="flex-direction:column;gap:16px;"><div class="bizcard bizcard--front"><div class="logolock logolock--ink" style="text-align:left;"><span class="logolock__name" style="font-size:1.15rem;color:var(--ink);">Willian Souza</span><span class="logolock__sub" style="font-size:.5rem;letter-spacing:.32em;">| Tatuador</span></div><div class="wire wire--dark wire--thin" aria-hidden="true" style="height:18px;"></div><div class="bizcard__contact">wa.me/5511950869752<br>@w_stattoo · Cotia/SP</div></div><div class="bizcard bizcard--back"><div class="wire wire--thin" aria-hidden="true" style="height:18px;"></div><p style="font-family:var(--head);font-size:1.15rem;text-transform:uppercase;line-height:.98;color:var(--paper);">Sua história,<br>gravada na pele.</p><div class="bizcard__contact">Arte autoral · Cotia/SP</div></div></div></div>
+      <div class="mock"><p class="mono silver">Instagram · Feed 1:1</p><div class="mock__stage"><div class="post"><span class="post__tag">@w_stattoo</span><div class="wire wire--thin" aria-hidden="true"></div><p class="post__line">Sua história,<br>gravada<br>na pele.</p><span class="post__tag">Cotia · SP</span></div></div></div>
+      <div class="mock"><p class="mono silver">Instagram · Story 9:16</p><div class="mock__stage"><div class="post post--story"><span class="post__tag">Orçamento aberto</span><div class="wire wire--thin" aria-hidden="true"></div><div><p class="post__line">Agenda<br>aberta.</p><p class="tiny muted" style="margin-top:12px;">Chama no WhatsApp com a ideia.</p></div><span class="post__tag">@w_stattoo</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="sec sec--light" id="checklist">
+  <div class="wrap">
+    <div class="chapter-head rv">
+      <span class="chapter-num">09</span>
+      <div class="chapter-head__txt">
+        <span class="eyebrow">Checklist &amp; Contatos</span>
+        <h2>Antes de<br>publicar.</h2>
+        <p>Cinco conferências rápidas que evitam 90% dos erros de aplicação da marca.</p>
+      </div>
+    </div>
+    <div class="split" style="align-items:flex-start;">
+      <ul class="check rv">
+        <li>O logotipo está na versão correta para o fundo?</li>
+        <li>A área de respiro equivalente à altura do “W” foi respeitada?</li>
+        <li>As cores usadas são exatamente as dos códigos deste manual?</li>
+        <li>Os títulos estão em Barlow Condensed caixa alta e o corpo em Inter?</li>
+        <li>O texto soa como a marca fala, direto, próximo, sem superlativo vazio?</li>
+      </ul>
+      <div class="rv">
+        <span class="eyebrow">Arquivos e contato</span>
+        <div class="card" style="background:#fff;">
+          <h3 style="font-size:1rem;letter-spacing:.06em;">Kit de marca</h3>
+          <p style="margin-top:10px;">Solicite os arquivos vetoriais (SVG, PDF, AI) e as variações em alta resolução diretamente com o responsável.</p>
+          <div class="wire wire--dark wire--thin" aria-hidden="true" style="margin:22px 0;"></div>
+          <p class="mono muted">Willian Souza · Tatuador</p>
+          <p style="margin-top:10px;"><a href="https://wa.me/5511950869752" style="color:var(--ink);border-bottom:1px solid var(--steel);">+55 11 95086-9752</a><br><a href="https://www.instagram.com/w_stattoo/" style="color:var(--ink);border-bottom:1px solid var(--steel);">@w_stattoo</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="wire wire--thin" aria-hidden="true" style="margin-bottom:44px;"></div>
+    <div class="foot__grid">
+      <div>
+        <div class="logolock" style="text-align:left;"><span class="logolock__name" style="font-size:1.5rem;color:var(--paper);">Willian Souza</span><span class="logolock__sub" style="font-size:.55rem;letter-spacing:.36em;">| Tatuador</span></div>
+        <p class="tiny muted" style="margin-top:16px;max-width:28ch;">Arte autoral, higiene de verdade e acompanhamento do orçamento à cicatrização.</p>
+      </div>
+      <div><h4>Capítulos</h4><a href="#manifesto">01 · Manifesto</a><br><a href="#logotipo">02 · Logotipo</a><br><a href="#cores">03 · Cores</a><br><a href="#tipografia">04 · Tipografia</a></div>
+      <div><h4>&nbsp;</h4><a href="#grafismos">05 · Grafismos</a><br><a href="#imagem">06 · Imagem</a><br><a href="#voz">07 · Tom de Voz</a><br><a href="#aplicacoes">08 · Aplicações</a></div>
+      <div><h4>Contato</h4><a href="https://wa.me/5511950869752" target="_blank">WhatsApp</a><br><a href="https://www.instagram.com/w_stattoo/" target="_blank">Instagram</a><br><a href="https://vm.tiktok.com/ZM83u2cKK/" target="_blank">TikTok</a></div>
+    </div>
+    <div class="foot__bar"><span>Manual de Marca · Versão 2.0 · 2026</span><span>Cotia · São Paulo · Brasil</span><span>Uso interno &amp; parceiros</span></div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('is-in'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('is-in'); io.unobserve(en.target); } });
+  },{ threshold:.12, rootMargin:'0px 0px -60px 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+</body>
+</html>
