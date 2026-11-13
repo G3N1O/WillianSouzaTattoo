@@ -3,39 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>
-    (function () {
-      var navigationEntry = window.performance &&
-        typeof window.performance.getEntriesByType === "function" &&
-        window.performance.getEntriesByType("navigation")[0];
-      var isReload = navigationEntry
-        ? navigationEntry.type === "reload"
-        : window.performance && window.performance.navigation &&
-          window.performance.navigation.type === 1;
-
-      if (!isReload) return;
-
-      if ("scrollRestoration" in window.history) {
-        window.history.scrollRestoration = "manual";
-      }
-      if (window.location.hash) {
-        window.history.replaceState(
-          window.history.state,
-          "",
-          window.location.pathname + window.location.search
-        );
-      }
-      window.scrollTo(0, 0);
-      window.addEventListener("pageshow", function () {
-        window.scrollTo(0, 0);
-        if ("scrollRestoration" in window.history) {
-          window.requestAnimationFrame(function () {
-            window.history.scrollRestoration = "auto";
-          });
-        }
-      }, { once: true });
-    })();
-  </script>
   <title>Willian Souza — Tatuador em Cotia | Tatuagem autoral</title>
   <meta name="description" content="Tatuagem autoral em Cotia/SP. Arte exclusiva, desenhada do zero pra você, com higiene de verdade e atendimento próximo. Fale no WhatsApp.">
   <meta name="theme-color" content="#131518">
@@ -44,16 +11,15 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Willian Souza">
-  <link rel="canonical" href="https://g3n1o.github.io/WillianSouzaTattoo/">
   <meta property="og:url" content="https://g3n1o.github.io/WillianSouzaTattoo/">
-  <meta property="og:image" content="https://g3n1o.github.io/WillianSouzaTattoo/assets/Social/og-capa.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Willian Souza — tatuador em Cotia/SP">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="https://g3n1o.github.io/WillianSouzaTattoo/assets/Portfolio/1.jpg">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="1440">
+  <meta property="og:image:alt" content="Tatuagem autoral feita por Willian Souza">
+  <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Willian Souza — Tatuador em Cotia">
   <meta name="twitter:description" content="Tatuagens autorais em Cotia/SP. Sua história, gravada na pele.">
-  <meta name="twitter:image" content="https://g3n1o.github.io/WillianSouzaTattoo/assets/Social/og-capa.jpg">
+  <meta name="twitter:image" content="https://g3n1o.github.io/WillianSouzaTattoo/assets/Portfolio/1.jpg">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23212529'/%3E%3Ctext x='50' y='68' font-size='54' text-anchor='middle' fill='%23adb5bd' font-family='Georgia'%3EW%3C/text%3E%3C/svg%3E">
 
@@ -61,20 +27,94 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#f8f9fa',
+            silver: '#adb5bd',
+            steel: '#6c757d',
+            coal: '#343a40',
+            ink: '#212529',
+            abyss: '#131518'
+          },
+          fontFamily: {
+            head: ['"Barlow Condensed"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/tailwind.css">
 
-  <!-- Dados estruturados (SEO local: tatuador em Cotia/SP). Somente fatos verificados: sem endereco exato, horarios ou avaliacoes inventadas. -->
+  <style>
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .wire-divider {
+      height: 24px;
+      width: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='24' viewBox='0 0 64 24'%3E%3Cg fill='none' stroke='%23adb5bd' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M0 12h64'/%3E%3Cpath d='M28 4l8 16M36 4l-8 16'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat-x;
+      background-size: 64px 24px;
+      opacity: 0.2;
+      margin: 0 auto;
+      max-width: 1180px;
+    }
+    .seal {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 1px solid var(--silver, #adb5bd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex: none;
+      margin: 0 auto;
+    }
+    .seal__inner {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1px dashed rgba(173, 181, 189, 0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      line-height: 1.15;
+      color: var(--silver, #adb5bd);
+    }
+    .seal__inner small {
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      color: var(--steel, #6c757d);
+      margin-top: 4px;
+    }
+  </style>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TattooParlor",
-    "@id": "https://g3n1o.github.io/WillianSouzaTattoo/#organizacao",
     "name": "Willian Souza",
     "alternateName": "Willian Souza Tatuador",
     "description": "Tatuagem autoral em Cotia/SP: arte exclusiva desenhada do zero, higiene de verdade e atendimento próximo do orçamento à cicatrização.",
-    "url": "https://g3n1o.github.io/WillianSouzaTattoo/",
-    "image": "https://g3n1o.github.io/WillianSouzaTattoo/assets/Portfolio/1.webp",
+    "image": "https://g3n1o.github.io/WillianSouzaTattoo/assets/Artista/willian.webp",
     "telephone": "+5511950869752",
     "address": {
       "@type": "PostalAddress",
@@ -82,17 +122,7 @@
       "addressRegion": "SP",
       "addressCountry": "BR"
     },
-    "areaServed": [
-      { "@type": "City", "name": "Cotia" },
-      { "@type": "AdministrativeArea", "name": "Grande São Paulo" }
-    ],
-    "knowsAbout": ["Blackwork", "Traço fino", "Tatuagem autoral", "Design exclusivo"],
-    "founder": {
-      "@type": "Person",
-      "name": "Willian Souza",
-      "jobTitle": "Artista e Tatuador",
-      "sameAs": "https://www.instagram.com/w_stattoo/"
-    },
+    "areaServed": { "@type": "City", "name": "Cotia" },
     "sameAs": [
       "https://www.instagram.com/w_stattoo/",
       "https://vm.tiktok.com/ZM83u2cKK/"
@@ -103,8 +133,6 @@
 
 <body class="bg-abyss text-paper font-[Inter] antialiased overflow-x-hidden">
 
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__content">
       <img class="preloader-logo" src="assets/Logo/logo.webp" alt="">
@@ -113,7 +141,6 @@
   </div>
 
   <div class="progress" id="progressBar" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
 
   <!-- ===== NAVBAR ===== -->
   <header class="navbar" id="navbar">
@@ -123,7 +150,7 @@
         <span class="nav-title">Willian Souza</span>
       </a>
 
-      <nav class="nav-links items-center gap-10 md:flex" id="navLinks" aria-label="Navegação principal">
+      <nav class="nav-links hidden items-center gap-10 md:flex" id="navLinks" aria-label="Navegação principal">
         <a href="#galeria">Galeria</a>
         <a href="#artista">Artista</a>
         <a href="#processo">Processo</a>
@@ -140,7 +167,7 @@
     </div>
   </header>
 
-  <main id="conteudo" tabindex="-1">
+  <main>
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="inicio">
@@ -149,17 +176,12 @@
       <div class="container relative z-10 flex items-center justify-center">
         <div class="hero-brand rise rise-1">
           <img class="hero-logo" src="assets/Logo/logo.webp" alt="Willian Souza">
-          <h1 class="hero-name">Willian Souza <span>|</span> Tatuador</h1>
+          <p class="hero-name">Willian Souza <span>|</span> Tatuador</p>
           <a class="hero-sub-cta rise rise-2" href="https://wa.me/5511950869752" target="_blank" rel="noopener" aria-label="Tatuagens feitas com alma — pedir orçamento no WhatsApp">
             Tatuagens feitas com alma <span class="hero-sub-cta__arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
-      <a class="hero-scroll-cue" href="#galeria" aria-label="Ir para a galeria">
-        <svg class="hero-scroll-cue__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </a>
     </section>
 
     <!-- ===== MARQUEE / PROVA ===== -->
@@ -187,82 +209,9 @@
       </div>
 
       <div class="galeria-stage reveal">
-        <div class="polaroid-carousel" data-polaroid-carousel>
-          <svg class="polaroid-carousel__cord" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <path d="M0 12 C280 12 360 62 600 62 S920 12 1200 12"></path>
-          </svg>
-          <div class="polaroid-carousel__viewport" data-carousel-viewport role="region" aria-label="Carrossel de tatuagens de Willian Souza" aria-roledescription="carrossel" tabindex="0">
-            <div class="polaroid-carousel__track" data-carousel-track>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="1 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 1 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/1.webp" alt="Tatuagem autoral de Willian Souza, imagem 1 de 9" loading="eager" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 01</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="2 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 2 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/2.webp" alt="Tatuagem autoral de Willian Souza, imagem 2 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 02</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="3 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 3 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/3.webp" alt="Tatuagem autoral de Willian Souza, imagem 3 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 03</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="4 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 4 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/4.webp" alt="Tatuagem autoral de Willian Souza, imagem 4 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 04</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="5 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 5 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/5.webp" alt="Tatuagem autoral de Willian Souza, imagem 5 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 05</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="6 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 6 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/6.webp" alt="Tatuagem autoral de Willian Souza, imagem 6 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 06</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="7 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 7 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/7.webp" alt="Tatuagem autoral de Willian Souza, imagem 7 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 07</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="8 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 8 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/8.webp" alt="Tatuagem autoral de Willian Souza, imagem 8 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 08</span>
-                </button>
-              </div>
-              <div class="polaroid-carousel__slide" role="group" aria-roledescription="slide" aria-label="9 de 9">
-                <button class="polaroid-card" type="button" data-gallery-open aria-label="Ampliar tatuagem 9 de 9">
-                  <span class="polaroid-card__peg" aria-hidden="true"></span>
-                  <img src="assets/Portfolio/9.webp" alt="Tatuagem autoral de Willian Souza, imagem 9 de 9" loading="lazy" decoding="async" draggable="false">
-                  <span class="polaroid-card__caption">W. STATTOO · 09</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="polaroid-carousel__controls" role="group" aria-label="Controles do carrossel">
-            <button class="polaroid-carousel__control" type="button" data-carousel-previous aria-label="Tatuagem anterior">←</button>
-            <span class="polaroid-carousel__status" data-carousel-status aria-live="polite" aria-atomic="true">1 de 9</span>
-            <button class="polaroid-carousel__control" type="button" data-carousel-next aria-label="Próxima tatuagem">→</button>
+        <div class="drift-wrap">
+          <div class="drift-wall" id="driftWall" role="img" aria-label="Galeria de tatuagens autorais de Willian Souza">
+            <div class="drift-wall__plane" id="driftPlane" aria-hidden="true"></div>
           </div>
         </div>
       </div>
@@ -272,28 +221,18 @@
       </div>
     </section>
 
-    <dialog class="polaroid-lightbox" data-gallery-dialog aria-label="Tatuagem ampliada">
-      <div class="polaroid-lightbox__content">
-        <button class="polaroid-lightbox__close" type="button" data-gallery-close aria-label="Fechar imagem ampliada">×</button>
-        <button class="polaroid-lightbox__control polaroid-lightbox__previous" type="button" data-lightbox-previous aria-label="Tatuagem anterior">←</button>
-        <img class="polaroid-lightbox__image" data-lightbox-image src="assets/Portfolio/1.webp" alt="">
-        <button class="polaroid-lightbox__control polaroid-lightbox__next" type="button" data-lightbox-next aria-label="Próxima tatuagem">→</button>
-        <p class="polaroid-lightbox__status" data-lightbox-status aria-live="polite" aria-atomic="true"></p>
-      </div>
-    </dialog>
-
     <!-- ===== ARTISTA ===== -->
     <section class="container py-16 lg:py-20" id="artista">
       <div class="reveal-group grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
         <div class="reveal">
-          <h2 class="artist-heading max-w-xl">
+          <span class="eyebrow">O artista</span>
+          <h2 class="max-w-xl">
             QUEM DESENHA É QUEM <span class="text-silver">TATUA</span>
           </h2>
-          <span class="eyebrow text-4xl md:text-6xl">O artista</span>
           <div class="mt-7 space-y-5 text-silver font-light">
             <p>
               Willian Souza é artista e tatuador em Cotia, no coração de São Paulo. Ele não
-              "aplica desenhos". Ele constrói peças. Primeiro escuta, depois desenha,
+              "aplica desenhos" — ele constrói peças. Primeiro escuta, depois desenha,
               e só então trabalha na sua pele.
             </p>
             <p>
@@ -305,17 +244,28 @@
           <a href="#galeria" class="btn btn-ghost mt-8 !border-silver/40">Conhecer o trabalho</a>
         </div>
 
-        <div class="reveal flex items-center justify-center">
-          <figure class="artist-frame">
+        <div class="reveal flex flex-col items-center justify-center gap-8">
+          <figure class="artist-frame w-full">
             <img class="artist-photo" src="assets/Artista/willian.webp" alt="Willian Souza, artista e tatuador" loading="lazy">
             <figcaption class="artist-caption">
               <span>Willian Souza</span>
               <small>Artista e tatuador</small>
             </figcaption>
           </figure>
+          
+          <!-- SELO ADICIONADO AQUI -->
+          <div class="seal">
+            <div class="seal__inner">
+              Willian<br>Souza
+              <small>Cotia · SP</small>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- ARAME ADICIONADO AQUI -->
+    <div class="wire-divider"></div>
 
     <!-- ===== PROCESSO ===== -->
     <section class="border-y border-silver/10 bg-ink/40 py-16 lg:py-20" id="processo">
@@ -359,23 +309,27 @@
         </div>
 
         <div class="reveal-group grid gap-5 md:grid-cols-3">
+          <!-- DEPOIMENTOS MANTIDOS DO SEU JEITO (SEM TEXTO E SEM ASPAS) -->
           <figure class="reveal quote-card">
-            <img class="quote-bg" src="assets/Prova%20Social/p1.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img class="quote-bg" src="assets/Prova%20Social/P1.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <img class="quote-print" src="assets/Prova%20Social/PS1.png" alt="Print do comentário original do cliente" loading="lazy" decoding="async">
           </figure>
 
           <figure class="reveal quote-card">
-            <img class="quote-bg" src="assets/Prova%20Social/p2.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img class="quote-bg" src="assets/Prova%20Social/P2.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <img class="quote-print" src="assets/Prova%20Social/PS2.png" alt="Print do comentário original do cliente" loading="lazy" decoding="async">
           </figure>
 
           <figure class="reveal quote-card">
-            <img class="quote-bg" src="assets/Prova%20Social/p3.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img class="quote-bg" src="assets/Prova%20Social/P3.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <img class="quote-print" src="assets/Prova%20Social/PS3.png" alt="Print do comentário original do cliente" loading="lazy" decoding="async">
           </figure>
         </div>
       </div>
     </section>
+
+    <!-- ARAME ADICIONADO AQUI -->
+    <div class="wire-divider"></div>
 
     <!-- ===== FAQ ===== -->
     <section class="border-y border-silver/10 bg-ink/40 py-16 lg:py-20" id="faq">
@@ -398,21 +352,21 @@
               Quanto custa uma tatuagem?
               <span class="acc-icon">+</span>
             </button>
-            <div class="acc-panel" id="faq-panel-2"><p>Depende do tamanho, do detalhamento e da área do corpo. O valor é fechado com você antes de qualquer agendamento, sem surpresa.</p></div>
+            <div class="acc-panel" id="faq-panel-2"><p>Depende do tamanho, do detalhamento e da área do corpo. O valor é fechado com você antes de qualquer agendamento — sem surpresa.</p></div>
           </div>
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-3">
               Posso levar uma arte pronta?
               <span class="acc-icon">+</span>
             </button>
-            <div class="acc-panel" id="faq-panel-3"><p>Pode levar referências. Mas a tatuagem final é sempre desenhada do zero, na medida certa pro seu corpo. Este é o nosso selo.</p></div>
+            <div class="acc-panel" id="faq-panel-3"><p>Pode levar referências. Mas a tatuagem final é sempre desenhada do zero, na medida certa pro seu corpo — este é o nosso selo.</p></div>
           </div>
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-4">
               Dói muito?
               <span class="acc-icon">+</span>
             </button>
-            <div class="acc-panel" id="faq-panel-4"><p>Cada região tem uma sensibilidade diferente. A gente conversa sobre isso antes e você vai preparado. A maioria descreve como um arranhão forte.</p></div>
+            <div class="acc-panel" id="faq-panel-4"><p>Cada região tem uma sensibilidade diferente. A gente conversa sobre isso antes e você vai preparado — a maioria descreve como um arranhão forte.</p></div>
           </div>
           <div class="acc-item reveal">
             <button class="acc-btn" aria-expanded="false" aria-controls="faq-panel-5">
@@ -447,6 +401,9 @@
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
+    <!-- ARAME ADICIONADO AQUI -->
+    <div class="wire-divider" style="opacity: 0.1; margin-bottom: -20px;"></div>
+
     <div class="container footer-inner">
       <a href="#inicio" class="footer-logo">
         <img class="footer-logo-img" src="assets/Logo/logo.webp" alt="Willian Souza">
@@ -476,6 +433,5 @@
   </button>
 
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/polaroid-carousel.js"></script>
 </body>
 </html>
