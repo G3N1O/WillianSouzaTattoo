@@ -475,6 +475,43 @@
     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
+<!-- SCRIPT DO MANUAL DE MARCA (Selo e Arame) -->
+  <style>
+    .wire-divider { height: 24px; width: 100%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='24' viewBox='0 0 64 24'%3E%3Cg fill='none' stroke='%23adb5bd' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M0 12h64'/%3E%3Cpath d='M28 4l8 16M36 4l-8 16'/%3E%3C/g%3E%3C/svg%3E"); background-repeat: repeat-x; background-size: 64px 24px; opacity: 0.2; margin: 0 auto; max-width: 1180px; }
+    .seal { width: 110px; height: 110px; border-radius: 50%; border: 1px solid #adb5bd; display: flex; align-items: center; justify-content: center; margin: 20px auto 0; }
+    .seal__inner { width: 80px; height: 80px; border-radius: 50%; border: 1px dashed rgba(173, 181, 189, 0.45); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.1em; line-height: 1.15; color: #adb5bd; }
+    .seal__inner small { font-size: 0.45rem; letter-spacing: 0.2em; color: #6c757d; margin-top: 4px; }
+  </style>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Adiciona o Selo na seção do Artista
+      var artistFrame = document.querySelector('.artist-frame');
+      if (artistFrame) {
+        var sealDiv = document.createElement('div');
+        sealDiv.className = 'seal';
+        sealDiv.innerHTML = '<div class="seal__inner">Willian<br>Souza<small>Cotia · SP</small></div>';
+        // Cola o selo logo depois da foto
+        artistFrame.parentNode.appendChild(sealDiv);
+      }
+
+      // Adiciona o Arame antes do Processo e do FAQ
+      var processSection = document.getElementById('processo');
+      if (processSection) {
+        var wire1 = document.createElement('div');
+        wire1.className = 'wire-divider';
+        processSection.parentNode.insertBefore(wire1, processSection);
+      }
+
+      var faqSection = document.getElementById('faq');
+      if (faqSection) {
+        var wire2 = document.createElement('div');
+        wire2.className = 'wire-divider';
+        faqSection.parentNode.insertBefore(wire2, faqSection);
+      }
+    });
+  </script>
+  
   <script src="assets/js/main.js"></script>
   <script src="assets/js/polaroid-carousel.js"></script>
 </body>
