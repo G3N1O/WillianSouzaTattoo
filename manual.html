@@ -21,7 +21,6 @@
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{margin:0;background:var(--abyss);color:var(--paper);font-family:var(--body);font-weight:300;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");}
 
 h1,h2,h3,h4,.display{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:.92;margin:0;}
 h1{font-size:clamp(3.2rem,11vw,9rem);}
@@ -142,10 +141,6 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
 .post__tag{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--steel);}
 .post__line{font-family:var(--head);font-size:1.6rem;line-height:.95;text-transform:uppercase;}
 
-.seal{width:130px;height:130px;border-radius:50%;border:1px solid var(--silver);display:flex;align-items:center;justify-content:center;position:relative;flex:none;}
-.seal__inner{width:96px;height:96px;border-radius:50%;border:1px dashed rgba(173,181,189,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--head);text-transform:uppercase;font-size:.72rem;letter-spacing:.1em;line-height:1.15;color:var(--silver);}
-.seal__inner small{font-size:.5rem;letter-spacing:.22em;color:var(--steel);margin-top:5px;}
-
 .voice{border-top:1px solid rgba(52,58,64,.18);padding-top:22px;}
 .voice h4{font-family:var(--head);font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;color:var(--ink);}
 .voice ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
@@ -173,7 +168,7 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
   @page{ size:A4; margin:14mm 12mm 14mm 12mm; }
   @page :first{ margin:0; }
   html,body{background:#fff !important;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-  body::after,.rail,.cover__grid{display:none !important;}
+  .rail,.cover__grid{display:none !important;}
   main{margin-left:0 !important;}
   .sec{padding:14mm 0;page-break-inside:avoid;}
   .sec--light{background:var(--paper) !important;color:var(--ink) !important;}
@@ -183,7 +178,7 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
   .cover{min-height:auto;height:297mm;padding:22mm 18mm 16mm;page-break-after:always;background:var(--abyss) !important;margin:-14mm -12mm 0 -12mm;}
   #sumario,#manifesto,#logotipo,#cores,#tipografia,#grafismos,#imagem,#voz,#aplicacoes,#checklist{page-break-before:always;}
   .rv{opacity:1 !important;transform:none !important;}
-  .chapter-head,.card,.spec,.swatch,.specimen,.wrong,.mock,.bizcard,.post,.seal,.split{page-break-inside:avoid;}
+  .chapter-head,.card,.spec,.swatch,.specimen,.wrong,.mock,.bizcard,.post,.split{page-break-inside:avoid;}
   h2,h3{page-break-after:avoid;}
   a[href]::after{content:'' !important;}
   .foot{background:var(--ink) !important;color:var(--paper) !important;page-break-before:always;}
@@ -312,7 +307,6 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
     <div class="spec rv" style="min-height:clamp(280px,35vw,400px); padding: 40px;">
       <span class="spec__label">Lockup principal · Símbolo + Tipografia</span>
       <div style="display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap;">
-        <!-- CAMINHO CORRIGIDO AQUI: logo.webp -->
         <img src="assets/Logo/logo.webp" alt="Logo Willian Souza" class="img-logo" style="max-width: 220px; border-radius: 8px; background: var(--coal);">
         <div class="logolock">
           <span class="logolock__name">Willian Souza</span>
@@ -337,7 +331,6 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
       </div>
       <div class="spec">
         <span class="spec__label spec__label--top">04 · Símbolo isolado</span>
-        <!-- CAMINHO CORRIGIDO AQUI: logo.webp -->
         <img src="assets/Logo/logo.webp" alt="Símbolo Willian Souza" style="max-height: 80px; object-fit: contain;">
       </div>
     </div>
@@ -551,18 +544,13 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
       <div class="chapter-head__txt">
         <span class="eyebrow">Grafismos &amp; Textura</span>
         <h2>O fio que<br>costura tudo.</h2>
-        <p>O arame farpado é o elemento gráfico oficial. Sempre discreto, sempre em linha.</p>
+        <p>Para manter a elegância e o foco na arte, a marca utiliza um único elemento gráfico: o arame farpado. Ele atua como o divisor oficial entre os conteúdos.</p>
       </div>
     </div>
-    <div class="spec rv" style="min-height:auto;padding:44px 30px;flex-direction:column;gap:34px;align-items:stretch;">
-      <span class="spec__label spec__label--top">Elemento 01 · Arame farpado</span>
-      <div><p class="mono muted" style="margin-bottom:12px;">Espessura cheia · divisor</p><div class="wire" aria-hidden="true"></div></div>
-      <div><p class="mono muted" style="margin-bottom:12px;">Espessura reduzida · textura</p><div class="wire wire--thin" aria-hidden="true"></div></div>
-    </div>
-    <div class="grid g3 rv" style="margin-top:26px;">
-      <div class="spec" style="flex-direction:column;gap:16px;"><span class="spec__label">Elemento 02 · Grade</span><div style="width:100%;height:110px;background-image:linear-gradient(rgba(173,181,189,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(173,181,189,.22) 1px,transparent 1px);background-size:22px 22px;"></div><p class="tiny muted" style="text-align:center;">Grade de 8pt</p></div>
-      <div class="spec" style="flex-direction:column;gap:16px;"><span class="spec__label">Elemento 03 · Grão</span><div style="width:100%;height:110px;background-color:var(--coal);background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E&quot;);"></div><p class="tiny muted" style="text-align:center;">Textura sutil</p></div>
-      <div class="spec" style="flex-direction:column;gap:16px;"><span class="spec__label">Elemento 04 · Selo</span><div class="seal"><div class="seal__inner">Willian<br>Souza<small>Cotia · SP</small></div></div></div>
+    <div class="spec rv" style="min-height:auto;padding:60px 30px;flex-direction:column;gap:34px;align-items:stretch;">
+      <span class="spec__label spec__label--top">Elemento Único · Arame farpado</span>
+      <div><p class="mono muted" style="margin-bottom:12px;">Espessura cheia · Divisor de seções</p><div class="wire" aria-hidden="true"></div></div>
+      <div><p class="mono muted" style="margin-bottom:12px;">Espessura reduzida · Textura sutil de fundo</p><div class="wire wire--thin" aria-hidden="true"></div></div>
     </div>
   </div>
 </section>
@@ -583,7 +571,6 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
       <figure class="spec" style="flex-direction:column;gap:0;padding:0;min-height:0;overflow:hidden;">
         <span class="spec__label spec__label--top">Fotografia · Trabalho real</span>
         <div style="width:100%;aspect-ratio:4/3;background:var(--coal);">
-          <!-- CAMINHO CORRIGIDO AQUI: willian.webp -->
           <img src="assets/Artista/willian.webp" alt="Willian Souza tatuando" class="img-foto">
         </div>
         <figcaption style="padding:20px 24px 26px;">
@@ -595,7 +582,6 @@ main{margin-left:var(--rail-w);} section{scroll-margin-top:24px;}
       <figure class="spec" style="flex-direction:column;gap:0;padding:0;min-height:0;overflow:hidden;">
         <span class="spec__label spec__label--top">Ilustração · Avatar oficial</span>
         <div style="width:100%;aspect-ratio:4/3;background:var(--coal);">
-          <!-- CAMINHO CORRIGIDO AQUI: logo.webp -->
           <img src="assets/Logo/logo.webp" alt="Avatar ilustrado Willian Souza" class="img-foto" style="object-fit: contain; padding: 20px;">
         </div>
         <figcaption style="padding:20px 24px 26px;">
