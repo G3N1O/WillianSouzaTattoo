@@ -1,3 +1,4 @@
+
 :root {
   --c-100: #f8f9fa;
   --c-200: #adb5bd;
@@ -1245,12 +1246,6 @@ section {
   }
 }
 
-@media (max-width: 560px) {
-  .polaroid-carousel__viewport {
-    height: min(500px, 72vh);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .polaroid-card,
   .polaroid-carousel__control,
@@ -1402,6 +1397,7 @@ section {
   }
 
   .nav-links.open {
+    display: flex;
     pointer-events: auto;
     visibility: visible;
     transform: translateX(0);
